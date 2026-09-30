@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkout | OBD-FuelGuard</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/check.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navi.css') }}"> 
+</head>
+<body>
+
+    {% include 'header.html' %}
+
+    <div class="page-wrap" id="pageWrap">
+        <!-- Rendered by JS -->
+    </div>
+
+    <script>
+        async function init() {
+            try {
+                const res = await fetch('/api/cart', { credentials: 'include' });
+                const data = await res.json();
+
+                if (!data.success || !data.items || data.items.length === 0) {
+                    document.getElementById('pageWrap').innerHTML = `
+                        <div class="success-screen">
+                            <div class="success-icon" style="background:rgba(139,144,153,0.15);border-color:var(--text-muted);color:var(--text-muted);">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <h2>Your Cart is Empty</h2>
+                            <p>Add some products before checking out.</p>
+                            <a href="/products" class="btn btn-primary">
+                                <i class="fas fa-shopping-bag"></i> Browse Products
+                            </a>
+                        </div>`;
+                    return;
+                }
+
+                renderCheckout(data);
+            } catch (e) {
+                console.error('Init error:', e);
+            }
+        }
+
+        function renderCheckout(cart) {
+            const subtotal = cart.subtotal;
+            const tax = subtotal * 0.06;
+            const shipping = subtotal >= 500 ? 0 : 25;
+            const total = subtotal + tax + shipping;
+
+            document.getElementById('pageWrap').innerHTML = `
+                <div class="page-header">
+                    <h1>Checkout</h1>
+                    <p>Complete your order details below.</p>
+                </div>
+
+                <div class="checkout-layout">
+                    <div>
+                        <div class="card">
+                            <h2><i class="fas fa-user"></i> Contact Information</h2>
+                            <div class="alert alert-error" id="errorAlert">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span id="errorText">Error message</span>
+                            </div>
+                            <form id="checkoutForm" onsubmit="placeOrder(event)">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>Full Name *</label>
+                                        <input type="text" id="customerName" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email *</label>
+                                        <input type="email" id="customerEmail" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Phone *</label>
+                                        <input type="tel" id="customerPhone" required>
+                                    </div>
+                                    <div class="form-group full">
+                                        <label>Shipping Address *</label>
+                                        <textarea id="shippingAddress" required placeholder="Street, City, State, Postcode"></textarea>
+                                    </div>
+                                    <div class="form-group full">
+                                        <label>Order Notes (optional)</label>
+                                        <textarea id="notes" placeholder="Any special instructions..."></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="card">
+                            <h2><i class="fas fa-receipt"></i> Order Summary</h2>
+                            <div class="order-items">
+                                ${cart.items.map(item => `
+                                    <div class="order-item">
+                                        <img src="${item.image_url || 'https://via.placeholder.com/50/171a21/8b9099?text=OBD'}"
+                                             alt="${item.name}" class="order-item-img"
+                                             onerror="this.src='https://via.placeholder.com/50/171a21/8b9099?text=OBD'">
+                                        <div class="order-item-info">
+                                            <div class="order-item-name">${item.name}</div>
+                                            <div class="order-item-qty">Qty: ${item.quantity}</div>
+                                        </div>
+                                        <div class="order-item-price">RM ${item.line_total.toFixed(2)}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <div class="summary-row">
+                                <span>Subtotal</span>
+                                <span class="value">RM ${subtotal.toFixed(2)}</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Tax (6% SST)</span>
+                                <span class="value">RM ${tax.toFixed(2)}</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Shipping</span>
+                                <span class="value">${shipping === 0 ? 'FREE' : 'RM ' + shipping.toFixed(2)}</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total</span>
+                                <span class="value">RM ${total.toFixed(2)}</span>
+                            </div>
+
+                            <button class="place-order-btn" id="placeOrderBtn" onclick="placeOrder()">
+                                <i class="fas fa-lock"></i> Place Order — RM ${total.toFixed(2)}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function placeOrder(e) {
+            if (e) e.preventDefault();
+
+            const btn = document.getElementById('placeOrderBtn');
+            const alert = document.getElementById('errorAlert');
+
+            const payload = {
+                customer_name: document.getElementById('customerName').value.trim(),
+                customer_email: document.getElementById('customerEmail').value.trim(),
+                customer_phone: document.getElementById('customerPhone').value.trim(),
+                shipping_address: document.getElementById('shippingAddress').value.trim(),
+                notes: document.getElementById('notes').value.trim()
+            };
+
+            if (!payload.customer_name || !payload.customer_email || !payload.customer_phone || !payload.shipping_address) {
+                document.getElementById('errorText').textContent = 'Please fill in all required fields.';
+                alert.classList.add('show');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            alert.classList.remove('show');
+
+            try {
+                const res = await fetch('/api/orders/create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    showSuccess(data.order);
+                } else {
+                    document.getElementById('errorText').textContent = data.error || 'Failed to place order.';
+                    alert.classList.add('show');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-lock"></i> Place Order';
+                }
+            } catch (err) {
+                console.error('Place order error:', err);
+                document.getElementById('errorText').textContent = 'Network error. Please try again.';
+                alert.classList.add('show');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-lock"></i> Place Order';
+            }
+        }
+
+        function showSuccess(order) {
+            document.getElementById('pageWrap').innerHTML = `
+                <div class="success-screen">
+                    <div class="success-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h2>Order Placed!</h2>
+                    <div class="order-num">${order.order_number}</div>
+                    <p>Thank you for your order! We've received your purchase and will contact you shortly with fulfillment details.</p>
+                    <div class="success-actions">
+                        <a href="/dashboard" class="btn btn-primary">
+                            <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+                        </a>
+                        <a href="/products" class="btn btn-secondary">
+                            <i class="fas fa-shopping-bag"></i> Continue Shopping
+                        </a>
+                    </div>
+                </div>`;
+        }
+
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

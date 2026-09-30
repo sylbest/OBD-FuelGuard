@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- ===== SEO: TITLE TAG ===== -->
+    <title>OBD-FuelGuard | Tamper-Proof Fuel Subsidy Verification System Malaysia</title>
+    
+    <!-- ===== SEO: META DESCRIPTION ===== -->
+    <meta name="description" content="OBD-FuelGuard is a smart, tamper-proof fuel subsidy verification system using OBD-RFID technology. Ensure every subsidized liter reaches its intended vehicle. Request a demo today.">
+    
+    <!-- ===== SEO: KEYWORDS ===== -->
+    <meta name="keywords" content="fuel subsidy verification, OBD-RFID, Malaysia fuel subsidy, BUDI95, fleet management, subsidy leakage prevention, fuel subsidy system, government fuel subsidy">
+    
+    <!-- ===== SEO: CANONICAL ===== -->
+    <link rel="canonical" href="https://obd-fuelguard.com/">
+    
+    <!-- ===== SEO: OPEN GRAPH (Social Sharing) ===== -->
+    <meta property="og:title" content="OBD-FuelGuard | Vehicle-Level Fuel Subsidy Verification">
+    <meta property="og:description" content="Ensuring every subsidized liter reaches its intended vehicle. Tamper-proof OBD-RFID technology for government, petrol stations & fleet operators.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://obd-fuelguard.com/">
+    <meta property="og:image" content="https://obd-fuelguard.com/images/og-image.jpg">
+    <meta property="og:site_name" content="OBD-FuelGuard">
+    
+    <!-- ===== SEO: TWITTER CARD ===== -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="OBD-FuelGuard | Fuel Subsidy Verification System">
+    <meta name="twitter:description" content="Tamper-proof OBD-RFID technology ensuring every subsidized liter reaches its intended vehicle.">
+    <meta name="twitter:image" content="https://obd-fuelguard.com/images/og-image.jpg">
+    
+    <!-- ===== FAVICON ===== -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+    
+    <!-- ===== SCHEMA MARKUP: Organization ===== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "SUS Company",
+      "alternateName": "OBD-FuelGuard",
+      "url": "https://obd-fuelguard.com",
+      "logo": "https://obd-fuelguard.com/images/logo.png",
+      "description": "Malaysian technology firm specializing in OBD-RFID fuel subsidy verification systems.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "MY"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-800-888-838",
+        "contactType": "customer service",
+        "availableLanguage": ["English", "Malay", "Chinese"]
+      },
+      "sameAs": [
+        "https://www.facebook.com/obdfuelguard",
+        "https://www.linkedin.com/company/obd-fuelguard",
+        "https://www.instagram.com/obdfuelguard",
+        "https://www.youtube.com/@obdfuelguard"
+      ]
+    }
+    </script>
+    
+    <!-- ===== SCHEMA MARKUP: Product ===== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "OBD-FuelGuard",
+      "description": "Smart, tamper-proof fuel subsidy verification system using OBD-RFID technology.",
+      "brand": {
+        "@type": "Brand",
+        "name": "SUS Company"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "MYR",
+        "availability": "https://schema.org/InStock",
+        "url": "https://obd-fuelguard.com/pricing"
+      }
+    }
+    </script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- ===== GOOGLE ANALYTICS (Replace G-XXXXXXXXXX with your ID) ===== -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    
+    <!-- ===== HUBSPOT TRACKING (Replace XXXXXX with your Portal ID) ===== -->
+    <!-- <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/XXXXXX.js"></script> -->
+    
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navi.css') }}">
+
+    <!-- ===== CENTER OVERRIDES (loads after external CSS so it always wins) ===== -->
+    <style>
+        /* --- Center Models Section --- */
+        .models-section {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+        }
+        .models-header {
+            text-align: center !important;
+            width: 100%;
+        }
+        .models-carousel {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            flex-wrap: wrap !important;
+            text-align: center !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        .car-card {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center !important;
+        }
+        .car-card h4 {
+            text-align: center !important;
+        }
+
+        /* --- Center Action Bar --- */
+        .action-bar {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            flex-wrap: wrap !important;
+            text-align: center !important;
+        }
+        .action-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== PROMO BANNER (First-Month 50% Offer) ===== -->
+    <div class="promo-banner">
+        🎉 <strong>LIMITED OFFER:</strong> Get <strong>50% OFF</strong> subscription fee for first-month adopters.
+        <span class="countdown" id="countdown">Loading...</span>
+    </div>
+
+    <!-- Navigation -->
+   {% include 'header.html' %}
+    <!-- Hero Section -->
+    <section class="hero">
+        <video autoplay muted loop playsinline id="myVideo" class="hero-video">
+            <source src="{{ url_for('static', filename='videos/Men.mp4') }}" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1>Verifying Subsidies at the Vehicle Level</h1>
+            <p>OBD-FuelGuard is a smart, tamper-proof fuel subsidy verification system that connects vehicles, petrol stations, and subsidy records through OBD-RFID technology—ensuring every subsidized liter reaches its intended vehicle.</p>
+            <a href="#request-demo" class="btn btn-primary">Request a Demo</a>
+            <a href="{{ url_for('static', filename='whitepaper.pdf') }}" class="btn btn-outline" download>Download Whitepaper</a>
+        </div>
+        <div class="hero-title"><font color="#ffffff"><span style="white-space: normal; color: #ffffff;"><span style="white-space:pre">	</span>OBD-</span></font><br> <span>FuelGuard</span>
+        </div>
+    </section>
+
+    <!-- ===== TRUST BAR ===== -->
+    <section class="trust-bar">
+        <div class="trust-item"><i class="fas fa-shield-alt"></i> Tamper-Proof Technology</div>
+        <div class="trust-item"><i class="fas fa-government"></i> Government-Ready</div>
+        <div class="trust-item"><i class="fas fa-gas-pump"></i> Universal Station Coverage</div>
+        <div class="trust-item"><i class="fas fa-chart-line"></i> Real-Time Analytics</div>
+        <div class="trust-item"><i class="fas fa-lock"></i> SSL Secured</div>
+    </section>
+
+    <!-- Explore Models Section -->
+    <section class="models-section">
+        <div class="models-header">
+            <h2>Why OBD-FuelGuard</h2>
+        </div>
+        <div class="models-carousel">
+            <div class="car-card">
+                <img src="{{ url_for('static', filename='images/petrol.jpg') }}" alt="Prevent fuel subsidy smuggling">
+                <h4>Prevent Subsidy Smuggling</h4>
+            </div>
+            <div class="car-card">
+                <img src="{{ url_for('static', filename='images/payment.png') }}" alt="Faster fuel verification">
+                <h4 class="active">Faster Verification</h4>
+            </div>
+            <div class="car-card">
+                <img src="{{ url_for('static', filename='images/station.jpg') }}" alt="Universal petrol station coverage">
+                <h4>Universal Station Coverage</h4>
+            </div>
+            <div class="car-card">
+                <img src="{{ url_for('static', filename='images/analytic.jpg') }}" alt="Real-time fuel analytics">
+                <h4>Real-Time Analytics</h4>
+            </div>
+            <div class="car-card">
+                <img src="{{ url_for('static', filename='images/esg.jpg') }}" alt="ESG and sustainability support">
+                <h4>Support ESG &amp; Sustainability</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STATS SECTION ===== -->
+    <section class="stats-section">
+        <div class="stat-item">
+            <h3>RM 1.2B+</h3>
+            <p>Annual Subsidy Leakage</p>
+        </div>
+        <div class="stat-item">
+            <h3>3,500+</h3>
+            <p>Petrol Stations Nationwide</p>
+        </div>
+        <div class="stat-item">
+            <h3>&lt; 3 sec</h3>
+            <p>Verification Time</p>
+        </div>
+        <div class="stat-item">
+            <h3>99.9%</h3>
+            <p>Verification Accuracy</p>
+        </div>
+    </section>
+
+    <!-- Deals Section -->
+    <section class="deals-section">
+        <div class="deals-content">
+            <h2>COMPANY PROFILE</h2>
+            <p>SUS Company is a Malaysian technology firm dedicated to building smart, transparent, and accountable solutions for the nation's fuel subsidy ecosystem. We specialize in OBD-RFID integration, vehicle verification technology, and real-time data analytics for government and commercial fleet applications.<br><br>Founded with a mission to eliminate fuel subsidy leakage, we combine hardware innovation with intelligent software to create a system that ensures every subsidized liter reaches its intended vehicle—and every intended vehicle only.</p>
+            <a href="about.html" class="btn">Learn More</a>
+        </div>
+    </section>
+
+    <!-- Feature Grid -->
+    <section class="feature-grid">
+        <div class="feature-card" style="background-image: url('https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?q=80&w=2070&auto=format&fit=crop');">
+            <div class="feature-text">
+                <h3>OUR VISION</h3>
+                <p>A Malaysia where fuel subsidies are fully transparent, verifiable, and fraud-free.</p>
+            </div>
+        </div>
+        <div class="feature-card" style="background-image: url('https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=2070&auto=format&fit=crop');">
+            <div class="feature-text">
+                <h3>OUR MISSION</h3>
+                <p>To empower the Government, petrol station operators, and fleet managers with real-time, tamper-proof fuel verification technology that protects public funds and builds trust in the subsidy system.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section class="testimonials-section">
+        <h2>What Our Partners Say</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="quote">"OBD-FuelGuard has transformed how we monitor fleet fuel consumption. The real-time analytics alone saved us 23% in fuel costs within the first quarter."</p>
+                <div class="author">Ahmad bin Ismail</div>
+                <div class="role">Fleet Manager, Logistics Company</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="quote">"The integration was seamless across our 50+ stations. Verification takes less than 3 seconds, and our customers love the transparency."</p>
+                <div class="author">Sarah Tan</div>
+                <div class="role">Operations Director, Petrol Station Chain</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="quote">"Finally, a solution that ensures subsidized fuel reaches those who truly need it. The government-grade security is exactly what we needed."</p>
+                <div class="author">Dato' Rajesh Kumar</div>
+                <div class="role">Senior Government Official</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== LEAD CAPTURE: REQUEST DEMO ===== -->
+    <section class="lead-section" id="request-demo">
+        <div class="lead-info">
+            <h2>Request a Free Demo</h2>
+            <p>See how OBD-FuelGuard can eliminate subsidy leakage for your organization. Our team will show you a live demonstration of the OBD-RFID verification process.</p>
+            <ul>
+                <li><i class="fas fa-check-circle"></i> 30-minute personalized walkthrough</li>
+                <li><i class="fas fa-check-circle"></i> ROI calculation for your fleet</li>
+                <li><i class="fas fa-check-circle"></i> Integration roadmap for your stations</li>
+                <li><i class="fas fa-check-circle"></i> No obligation, no pressure</li>
+            </ul>
+        </div>
+        <form class="lead-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <h3>Get Started Today</h3>
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" required placeholder="Your full name">
+            </div>
+            <div class="form-group">
+                <label for="email">Work Email *</label>
+                <input type="email" id="email" name="email" required placeholder="you@company.com">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" name="phone" required placeholder="+60 12-345 6789">
+            </div>
+            <div class="form-group">
+                <label for="organization">Organization *</label>
+                <input type="text" id="organization" name="organization" required placeholder="Company / Agency name">
+            </div>
+            <div class="form-group">
+                <label for="role">I am a... *</label>
+                <select id="role" name="role" required>
+                    <option value="">Select your role</option>
+                    <option value="government">Government Agency</option>
+                    <option value="petrol-station">Petrol Station Operator</option>
+                    <option value="fleet">Fleet Management Company</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="message">Message (optional)</label>
+                <textarea id="message" name="message" placeholder="Tell us about your needs..."></textarea>
+            </div>
+            <button type="submit" class="form-submit">Request Demo</button>
+            <p class="form-note">We respect your privacy. Your information will never be shared.</p>
+        </form>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        
+        <details class="faq-item">
+            <summary>How does OBD-FuelGuard prevent subsidy leakage?</summary>
+            <p>OBD-FuelGuard uses OBD-RFID technology to verify a vehicle's identity at the point of fueling. The system cross-references the vehicle's OBD data with the subsidy database in real-time. Only verified, eligible vehicles can access subsidized fuel, and every transaction is logged immutably.</p>
+        </details>
+        
+        <details class="faq-item">
+            <summary>Is the system compatible with all petrol stations?</summary>
+            <p>Yes. OBD-FuelGuard is designed for universal station coverage. It integrates with existing POS systems and requires minimal hardware installation. We support all major petrol station brands across Malaysia.</p>
+        </details>
+        
+        <details class="faq-item">
+            <summary>How long does installation take?</summary>
+            <p>Vehicle OBD device installation takes less than 5 minutes per vehicle. Station-side integration typically takes 1-2 days per location, depending on existing infrastructure.</p>
+        </details>
+        
+        <details class="faq-item">
+            <summary>What data does OBD-FuelGuard collect?</summary>
+            <p>We collect only what's necessary for verification: vehicle identification, fuel transaction data, and timestamps. All data is encrypted and compliant with Malaysia's PDPA regulations. We never collect personal driving data.</p>
+        </details>
+        
+        <details class="faq-item">
+            <summary>What is the pricing model?</summary>
+            <p>Pricing is subscription-based and scales with your fleet size or number of stations. First-month adopters receive 50% off the subscription fee. Contact us for a customized quote.</p>
+        </details>
+        
+        <details class="faq-item">
+            <summary>Can it integrate with our existing fleet management system?</summary>
+            <p>Absolutely. OBD-FuelGuard offers REST APIs and webhook integrations for popular fleet management platforms. Our team will work with you on custom integration if needed.</p>
+        </details>
+    </section>
+
+    <!-- News Section -->
+    <section class="news-section">
+        <div class="news-header">
+            <h2>CATCH UP ON THE LATEST NEWS</h2>
+            <a href="news.html">VIEW ALL NEWS</a>
+        </div>
+        <div class="news-grid">
+            <div class="news-card">
+                <img src="{{ url_for('static', filename='images/cooperate.png') }}" alt="SUS Company partners with Government">
+                <span class="tag">Corporate News</span>
+                <h3>SUS Company partners with the Government</h3>
+                <p>SUS is collaborating with the Government to build a smart, tamper-proof verification system that connects vehicles, petrol stations, and subsidy records—ensuring every subsidized liter reaches the right vehicle.</p>
+            </div>
+            <div class="news-card">
+                <img src="{{ url_for('static', filename='images/smuggler.jpg') }}" alt="Fuel smuggling in Malaysia">
+                <span class="tag">Industry News</span>
+                <h3 style="text-transform: uppercase;">Fuel Smuggling in Malaysia Hits Alarming New High</h3>
+                <p>The authorities' "Ops Tiris" enforcement operation has recorded thousands of cases and seized tens of millions of litres of subsidised fuel, worth hundreds of millions of ringgit.</p>
+            </div>
+            <div class="news-card">
+                <img src="{{ url_for('static', filename='images/increase.jpg') }}" alt="Subsidy increase to 300 litres">
+                <span class="tag">Policy Update</span>
+                <h3 style="text-transform: uppercase;">Subsidies Increase Back to 300 Litres</h3>
+                <p>Government has restored the basic BUDI MADANI RON95 (BUDI95) subsidy quota to 300 litres per month, effective 1 September 2026.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Action Bar -->
+    <section class="action-bar">
+        <a href="contact.html" class="action-btn">
+            <i class="fas fa-calendar-check"></i> Customer Support</a>
+        <a href="#request-demo" class="action-btn">
+            <i class="fas fa-handshake"></i> Partnership with us</a>
+        <a href="contact.html" class="action-btn">
+            <i class="fas fa-download"></i> Purchase</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Corporate</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="solution.html">Our Solution</a></li>
+                    <li><a href="government.html">Government Partnership</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Talk To Us</h4>
+                <ul>
+                    <li>English / BM / 中文</li>
+                    <li><a href="contact.html">Customer Support</a></li>
+                    <li>1-800-888-838</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="{{ url_for('static', filename='whitepaper.pdf') }}" download>Whitepaper</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="case-studies.html">Case Studies</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Social Media</h4>
+                <div class="social-icons">
+                    <a href="https://facebook.com/obdfuelguard" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/obdfuelguard" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/obdfuelguard" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://youtube.com/@obdfuelguard" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+                <h4 style="margin-top: 25px;">Newsletter</h4>
+                <form class="newsletter-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <input type="email" name="email" placeholder="Your email" required>
+                    <button type="submit">→</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-left">
+                <a href="terms.html">Terms & Conditions</a>
+                <a href="privacy.html">Privacy Notice</a>
+                <a href="cookies.html">Cookie Policy</a>
+            </div>
+            <span>© 2026 SUS Company. All Rights Reserved.</span>
+        </div>
+    </footer>
+
+    <!-- ===== FLOATING WHATSAPP ===== -->
+    <a href="https://wa.me/60123456789?text=Hi%2C%20I%27m%20interested%20in%20OBD-FuelGuard" 
+       class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ===== COOKIE BANNER ===== -->
+    <div class="cookie-banner" id="cookieBanner">
+        <span>We use cookies to enhance your experience. By continuing, you agree to our <a href="cookies.html">Cookie Policy</a> and <a href="privacy.html">Privacy Notice</a>.</span>
+        <button onclick="acceptCookies()">Accept</button>
+    </div>
+
+    <script>
+        // ===== CAROUSEL ACTIVE STATE =====
+        const carCards = document.querySelectorAll('.car-card h4');
+        carCards.forEach(card => {
+            card.addEventListener('click', () => {
+                carCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+            });
+        });
+
+        // ===== VIDEO CONTROL =====
+        var video = document.getElementById("myVideo");
+        var btn = document.getElementById("myBtn");
+        function myFunction(){
+            if(video.paused){
+                video.play();
+                btn.innerHTML ="Pause";
+            }
+            else{
+                video.pause();
+                btn.innerHTML = "Play";
+            }
+        }
+
+        // ===== COOKIE BANNER =====
+        function acceptCookies() {
+            document.getElementById('cookieBanner').style.display = 'none';
+            localStorage.setItem('cookiesAccepted', 'true');
+            // Track in Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'cookie_accept', { 'event_category': 'engagement' });
+            }
+        }
+        if (localStorage.getItem('cookiesAccepted') === 'true') {
+            document.getElementById('cookieBanner').style.display = 'none';
+        }
+
+        // ===== COUNTDOWN TIMER (First-Month Offer) =====
+        function startCountdown() {
+            // Set offer end date: 30 days from first visit
+            let endDate = localStorage.getItem('offerEndDate');
+            if (!endDate) {
+                endDate = new Date().getTime() + (30 * 24 * 60 * 60 * 1000);
+                localStorage.setItem('offerEndDate', endDate);
+            }
+            endDate = parseInt(endDate);
+
+            const timer = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = endDate - now;
+
+                if (distance < 0) {
+                    clearInterval(timer);
+                    document.getElementById('countdown').innerHTML = 'OFFER ENDED';
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('countdown').innerHTML =
+                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }, 1000);
+        }
+        startCountdown();
+
+        // ===== LEAD SCORING TRACKING =====
+        // Track high-intent actions for CRM lead scoring
+        document.querySelectorAll('a[href="#request-demo"]').forEach(el => {
+            el.addEventListener('click', function() {
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'demo_request_click', {
+                        'event_category': 'lead',
+                        'event_label': 'Request Demo CTA',
+                        'value': 5 // 5 points for demo request
+                    });
+                }
+            });
+        });
+
+        document.querySelectorAll('a[download]').forEach(el => {
+            el.addEventListener('click', function() {
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'whitepaper_download', {
+                        'event_category': 'lead',
+                        'event_label': 'Whitepaper Download',
+                        'value': 3 // 3 points for whitepaper download
+                    });
+                }
+            });
+        });
+
+        // Track form submission
+        document.querySelector('.lead-form').addEventListener('submit', function() {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'form_submit', {
+                    'event_category': 'lead',
+                    'event_label': 'Demo Request Form',
+                    'value': 5
+                });
+            }
+        });
+    </script>
+</body>
+</html>

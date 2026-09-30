@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>My Profile | OBD-FuelGuard</title>
+    <meta name="description" content="Manage your OBD-FuelGuard account profile.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navi.css') }}">
+</head>
+<body>
+
+    {% include 'header.html' %}
+
+    <div class="profile-page-wrap">
+        <div class="profile-page-header">
+            <h1>My Profile</h1>
+            <p>Manage your account information and security settings.</p>
+        </div>
+
+        <div id="loadingState" class="profile-loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading your profile...</p>
+        </div>
+
+        <div id="profileContent" class="profile-grid" style="display: none;">
+
+            <div class="profile-sidebar-card">
+                <div class="profile-avatar-large" id="bigAvatar">--</div>
+                <h2 id="sideName">--</h2>
+                <div class="profile-email" id="sideEmail">--</div>
+                <span class="profile-badge"><i class="fas fa-check-circle"></i> Active</span>
+
+                <div class="profile-sidebar-info">
+                    <div class="profile-info-row">
+                        <span class="profile-label">Member Since</span>
+                        <span class="profile-value" id="sideJoined">--</span>
+                    </div>
+                    <div class="profile-info-row">
+                        <span class="profile-label">Account ID</span>
+                        <span class="profile-value" id="sideId" style="font-size: 11px;">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-main-col">
+
+                <div class="profile-card">
+                    <div class="profile-card-header">
+                        <h3><i class="fas fa-user"></i> Personal Information</h3>
+                        <button class="profile-edit-btn" id="editToggle" onclick="toggleEdit()">
+                            <i class="fas fa-pen"></i> Edit
+                        </button>
+                    </div>
+
+                    <div class="profile-alert profile-alert-success" id="profileSuccess">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Profile updated successfully.</span>
+                    </div>
+                    <div class="profile-alert profile-alert-error" id="profileError">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span id="profileErrorText">Error message.</span>
+                    </div>
+
+                    <form id="profileForm" onsubmit="handleProfileUpdate(event)">
+                        <div class="profile-form-grid">
+                            <div class="profile-form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="pName" disabled>
+                            </div>
+                            <div class="profile-form-group">
+                                <label>Email Address</label>
+                                <input type="email" id="pEmail" disabled title="Email cannot be changed">
+                            </div>
+                            <div class="profile-form-group">
+                                <label>Phone Number</label>
+                                <input type="tel" id="pPhone" disabled>
+                            </div>
+                            <div class="profile-form-group">
+                                <label>Age</label>
+                                <input type="number" id="pAge" min="18" max="120" disabled>
+                            </div>
+                            <div class="profile-form-group">
+                                <label>Country</label>
+                                <select id="pCountry" disabled onchange="updateProfileStates()">
+                                    <option value="Malaysia">Malaysia</option>
+                                    <option value="Singapore">Singapore</option>
+                                    <option value="Indonesia">Indonesia</option>
+                                    <option value="Thailand">Thailand</option>
+                                    <option value="Brunei">Brunei</option>
+                                    <option value="Philippines">Philippines</option>
+                                    <option value="Vietnam">Vietnam</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="profile-form-group">
+                                <label>State</label>
+                                <select id="pState" disabled>
+                                    <option value="">Select state</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="profile-form-actions" id="profileActions" style="display: none;">
+                            <button type="button" class="profile-btn profile-btn-secondary" onclick="cancelEdit()">Cancel</button>
+                            <button type="submit" class="profile-btn profile-btn-primary" id="profileSaveBtn">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="profile-card">
+                    <div class="profile-card-header">
+                        <h3><i class="fas fa-lock"></i> Change Password</h3>
+                    </div>
+
+                    <div class="profile-alert profile-alert-success" id="pwSuccess">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Password changed successfully.</span>
+                    </div>
+                    <div class="profile-alert profile-alert-error" id="pwError">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span id="pwErrorText">Error message.</span>
+                    </div>
+
+                    <form id="passwordForm" onsubmit="handlePasswordChange(event)">
+                        <div class="profile-form-grid">
+                            <div class="profile-form-group profile-full">
+                                <label>Current Password</label>
+                                <input type="password" id="pwCurrent" placeholder="Enter current password" required>
+                            </div>
+                            <div class="profile-form-group">
+                                <label>New Password</label>
+                                <input type="password" id="pwNew" placeholder="Min 8 chars, letters + numbers" required>
+                            </div>
+                            <div class="profile-form-group">
+                                <label>Confirm New Password</label>
+                                <input type="password" id="pwConfirm" placeholder="Re-enter new password" required>
+                            </div>
+                        </div>
+
+                        <div class="profile-form-actions">
+                            <button type="submit" class="profile-btn profile-btn-primary" id="pwSaveBtn">
+                                <i class="fas fa-key"></i> Update Password
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // STATE MAPPING
+        // ============================================================
+        const statesByCountry = {
+            "Malaysia": [
+                "Johor", "Kedah", "Kelantan", "Melaka", "Negeri Sembilan",
+                "Pahang", "Perak", "Perlis", "Penang", "Sabah", "Sarawak",
+                "Selangor", "Terengganu",
+                "Kuala Lumpur", "Labuan", "Putrajaya"
+            ],
+            "Singapore": ["Central", "East", "North", "North-East", "West"],
+            "Indonesia": ["Jakarta", "West Java", "Central Java", "East Java", "Bali", "Sumatra", "Kalimantan", "Sulawesi", "Papua"],
+            "Thailand": ["Bangkok", "Chiang Mai", "Phuket", "Pattaya", "Khon Kaen", "Hat Yai", "Other"],
+            "Brunei": ["Brunei-Muara", "Belait", "Tutong", "Temburong"],
+            "Philippines": ["Metro Manila", "Cebu", "Davao", "Baguio", "Iloilo", "Other"],
+            "Vietnam": ["Hanoi", "Ho Chi Minh City", "Da Nang", "Hai Phong", "Other"],
+            "Other": ["Other"]
+        };
+
+        function populateStates(country, selected = "") {
+            const stateSelect = document.getElementById('pState');
+            if (!stateSelect) return;
+            stateSelect.innerHTML = '<option value="">Select state</option>';
+            (statesByCountry[country] || []).forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s;
+                opt.textContent = s;
+                if (s === selected) opt.selected = true;
+                stateSelect.appendChild(opt);
+            });
+        }
+
+        function updateProfileStates() {
+            const country = document.getElementById('pCountry').value;
+            populateStates(country);
+        }
+
+        // ============================================================
+        // UTILS
+        // ============================================================
+        function initials(name) {
+            if (!name) return "--";
+            return name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+        }
+
+        function formatDate(iso) {
+            if (!iso) return "--";
+            try {
+                const d = new Date(iso);
+                if (isNaN(d.getTime())) return "--";
+                return d.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
+            } catch (e) {
+                return "--";
+            }
+        }
+
+        function safeStr(val) {
+            return val != null ? String(val) : '';
+        }
+
+        function showAlert(id, textId, message) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (textId && message) {
+                const t = document.getElementById(textId);
+                if (t) t.textContent = message;
+            }
+            el.classList.add('profile-show');
+        }
+
+        function hideAlert(id) {
+            const el = document.getElementById(id);
+            if (el) el.classList.remove('profile-show');
+        }
+
+        function hideAllAlerts() {
+            document.querySelectorAll('.profile-alert').forEach(a => a.classList.remove('profile-show'));
+        }
+
+        // ============================================================
+        // LOAD PROFILE
+        // ============================================================
+        let originalData = {};
+
+        async function loadProfile() {
+            console.log('[Profile] Loading...');
+
+            try {
+                const res = await fetch('/api/profile', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                console.log('[Profile] HTTP status:', res.status);
+
+                if (res.status === 401) {
+                    console.warn('[Profile] 401 — redirecting to /auth');
+                    window.location.href = '/auth';
+                    return;
+                }
+
+                const data = await res.json();
+                console.log('[Profile] Response body:', data);
+
+                if (!data.success || !data.user) {
+                    console.error('[Profile] Invalid response:', data);
+                    const loading = document.getElementById('loadingState');
+                    if (loading) {
+                        loading.innerHTML =
+                            '<i class="fas fa-exclamation-circle" style="color:#E30613;"></i>' +
+                            '<p>Failed to load profile: ' + (data.error || 'Unknown error') + '</p>' +
+                            '<button class="profile-btn profile-btn-primary" onclick="location.reload()" style="margin-top:15px;">Retry</button>';
+                    }
+                    return;
+                }
+
+                const u = data.user;
+                originalData = { ...u };
+
+                console.log('[Profile] u.id type:', typeof u.id, 'value:', u.id);
+                console.log('[Profile] u.Age type:', typeof u.Age, 'value:', u.Age);
+
+                const nameStr = safeStr(u.Name);
+                const emailStr = safeStr(u.Email);
+                const phoneStr = safeStr(u.Phone);
+                const ageStr = safeStr(u.Age);
+                const countryStr = safeStr(u.Country);
+                const stateStr = safeStr(u.State);
+                const idStr = safeStr(u.id);
+
+                const bigAvatar = document.getElementById('bigAvatar');
+                const navAvatar = document.getElementById('navAvatar');
+                const navName = document.getElementById('navName');
+                const sideName = document.getElementById('sideName');
+                const sideEmail = document.getElementById('sideEmail');
+                const sideJoined = document.getElementById('sideJoined');
+                const sideId = document.getElementById('sideId');
+
+                if (bigAvatar) bigAvatar.textContent = initials(nameStr);
+                if (navAvatar) navAvatar.textContent = initials(nameStr);
+                if (navName) navName.textContent = nameStr.split(' ')[0] || 'User';
+                if (sideName) sideName.textContent = nameStr || '--';
+                if (sideEmail) sideEmail.textContent = emailStr || '--';
+                if (sideJoined) sideJoined.textContent = formatDate(u.created_at);
+                if (sideId) sideId.textContent = idStr ? idStr.slice(0, 8) + '...' : '--';
+
+                const pName = document.getElementById('pName');
+                const pEmail = document.getElementById('pEmail');
+                const pPhone = document.getElementById('pPhone');
+                const pAge = document.getElementById('pAge');
+                const pCountry = document.getElementById('pCountry');
+
+                if (pName) pName.value = nameStr;
+                if (pEmail) pEmail.value = emailStr;
+                if (pPhone) pPhone.value = phoneStr;
+                if (pAge) pAge.value = ageStr;
+                if (pCountry) pCountry.value = countryStr || 'Malaysia';
+
+                populateStates(countryStr || 'Malaysia', stateStr);
+
+                const loading = document.getElementById('loadingState');
+                const content = document.getElementById('profileContent');
+                if (loading) loading.style.display = 'none';
+                if (content) content.style.display = 'grid';
+
+                console.log('[Profile] Loaded successfully.');
+
+            } catch (err) {
+                console.error('[Profile] Unexpected error:', err);
+                const loading = document.getElementById('loadingState');
+                if (loading) {
+                    loading.innerHTML =
+                        '<i class="fas fa-exclamation-circle" style="color:#E30613;"></i>' +
+                        '<p>Error loading profile: ' + (err.message || err) + '</p>' +
+                        '<p style="font-size:12px;color:#999;margin-top:10px;">Check browser console for details.</p>' +
+                        '<button class="profile-btn profile-btn-primary" onclick="location.reload()" style="margin-top:15px;">Retry</button>';
+                }
+            }
+        }
+
+        // ============================================================
+        // EDIT TOGGLE
+        // ============================================================
+        let isEditing = false;
+
+        function toggleEdit() {
+            isEditing = !isEditing;
+            const fields = ['pName', 'pPhone', 'pAge', 'pCountry', 'pState'];
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.disabled = !isEditing;
+            });
+
+            const actions = document.getElementById('profileActions');
+            if (actions) actions.style.display = isEditing ? 'flex' : 'none';
+
+            const editToggle = document.getElementById('editToggle');
+            if (editToggle) {
+                editToggle.innerHTML = isEditing
+                    ? '<i class="fas fa-times"></i> Cancel'
+                    : '<i class="fas fa-pen"></i> Edit';
+            }
+
+            hideAllAlerts();
+        }
+
+        function cancelEdit() {
+            const pName = document.getElementById('pName');
+            const pPhone = document.getElementById('pPhone');
+            const pAge = document.getElementById('pAge');
+            const pCountry = document.getElementById('pCountry');
+
+            if (pName) pName.value = safeStr(originalData.Name);
+            if (pPhone) pPhone.value = safeStr(originalData.Phone);
+            if (pAge) pAge.value = safeStr(originalData.Age);
+            if (pCountry) pCountry.value = safeStr(originalData.Country) || 'Malaysia';
+
+            populateStates(safeStr(originalData.Country) || 'Malaysia', safeStr(originalData.State));
+
+            isEditing = true;
+            toggleEdit();
+        }
+
+        // ============================================================
+        // SAVE PROFILE
+        // ============================================================
+        async function handleProfileUpdate(e) {
+            e.preventDefault();
+            hideAllAlerts();
+
+            const payload = {
+                name: document.getElementById('pName').value.trim(),
+                phone: document.getElementById('pPhone').value.trim(),
+                age: document.getElementById('pAge').value,
+                country: document.getElementById('pCountry').value,
+                state: document.getElementById('pState').value
+            };
+
+            if (!payload.name || !payload.phone || !payload.age || !payload.country || !payload.state) {
+                showAlert('profileError', 'profileErrorText', 'Please fill in all fields.');
+                return;
+            }
+
+            const btn = document.getElementById('profileSaveBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+            try {
+                const res = await fetch('/api/profile/update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    showAlert('profileSuccess', null, 'Profile updated successfully.');
+                    originalData = { ...originalData, Name: payload.name, Phone: payload.phone, Age: payload.age, Country: payload.country, State: payload.state };
+
+                    const bigAvatar = document.getElementById('bigAvatar');
+                    const navAvatar = document.getElementById('navAvatar');
+                    const navName = document.getElementById('navName');
+                    const sideName = document.getElementById('sideName');
+
+                    if (bigAvatar) bigAvatar.textContent = initials(payload.name);
+                    if (navAvatar) navAvatar.textContent = initials(payload.name);
+                    if (navName) navName.textContent = payload.name.split(' ')[0];
+                    if (sideName) sideName.textContent = payload.name;
+
+                    toggleEdit();
+                    setTimeout(() => hideAlert('profileSuccess'), 3000);
+                } else {
+                    showAlert('profileError', 'profileErrorText', data.error || 'Update failed.');
+                }
+            } catch (err) {
+                console.error('Profile update error:', err);
+                showAlert('profileError', 'profileErrorText', 'Network error. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+            }
+        }
+
+        // ============================================================
+        // CHANGE PASSWORD
+        // ============================================================
+        async function handlePasswordChange(e) {
+            e.preventDefault();
+            hideAllAlerts();
+
+            const payload = {
+                current_password: document.getElementById('pwCurrent').value,
+                new_password: document.getElementById('pwNew').value,
+                confirm_password: document.getElementById('pwConfirm').value
+            };
+
+            if (!payload.current_password || !payload.new_password || !payload.confirm_password) {
+                showAlert('pwError', 'pwErrorText', 'Please fill in all fields.');
+                return;
+            }
+            if (payload.new_password.length < 8) {
+                showAlert('pwError', 'pwErrorText', 'New password must be at least 8 characters.');
+                return;
+            }
+            if (payload.new_password !== payload.confirm_password) {
+                showAlert('pwError', 'pwErrorText', 'New passwords do not match.');
+                return;
+            }
+
+            const btn = document.getElementById('pwSaveBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+
+            try {
+                const res = await fetch('/api/profile/change-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    showAlert('pwSuccess', null, 'Password changed successfully.');
+                    document.getElementById('passwordForm').reset();
+                    setTimeout(() => hideAlert('pwSuccess'), 3000);
+                } else {
+                    showAlert('pwError', 'pwErrorText', data.error || 'Password change failed.');
+                }
+            } catch (err) {
+                console.error('Password change error:', err);
+                showAlert('pwError', 'pwErrorText', 'Network error. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-key"></i> Update Password';
+            }
+        }
+
+        // ============================================================
+        // LOGOUT
+        // ============================================================
+        async function logout() {
+            try {
+                await fetch('/api/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+            } catch (e) {
+                console.error('Logout error:', e);
+            }
+            window.location.href = '/auth';
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        window.addEventListener('DOMContentLoaded', loadProfile);
+    </script>
+</body>
+</html>

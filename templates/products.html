@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shop | OBD-FuelGuard Products</title>
+    <meta name="description" content="Buy OBD-FuelGuard hardware, software, and enterprise plans. Fuel subsidy verification for fleets, petrol stations, and government.">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/product.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navi.css') }}"> 
+</head>
+<body>
+
+    <!-- ===== NAV ===== -->
+    {% include 'header.html' %}
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <h1>OBD-<span>FuelGuard</span> Shop</h1>
+        <p>Hardware, software, and enterprise plans for fuel subsidy verification. Free shipping on orders over RM 500.</p>
+    </section>
+
+    <!-- ===== FILTERS ===== -->
+    <div class="filters">
+        <button class="filter-btn active" data-category="all" onclick="setFilter('all', this)">All Products</button>
+        <button class="filter-btn" data-category="hardware" onclick="setFilter('hardware', this)">Hardware</button>
+        <button class="filter-btn" data-category="software" onclick="setFilter('software', this)">Software</button>
+        <button class="filter-btn" data-category="enterprise" onclick="setFilter('enterprise', this)">Enterprise</button>
+    </div>
+
+    <!-- ===== PRODUCTS ===== -->
+    <div class="products-wrap">
+        <div class="products-grid" id="productsGrid">
+            <div class="skeleton"></div>
+            <div class="skeleton"></div>
+            <div class="skeleton"></div>
+        </div>
+    </div>
+
+    <!-- ===== CART DRAWER ===== -->
+    <div class="cart-drawer-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+    <aside class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h2><i class="fas fa-shopping-cart"></i> Your Cart</h2>
+            <button class="close-btn" onclick="closeCart()">&times;</button>
+        </div>
+        <div class="cart-body" id="cartBody">
+            <div class="cart-empty">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display: none;">
+            <div class="cart-summary">
+                <span>Subtotal</span>
+                <span class="value" id="cartSubtotal">RM 0.00</span>
+            </div>
+            <div class="cart-summary">
+                <span>Tax (6% SST)</span>
+                <span class="value" id="cartTax">RM 0.00</span>
+            </div>
+            <div class="cart-summary">
+                <span>Shipping</span>
+                <span class="value" id="cartShipping">RM 25.00</span>
+            </div>
+            <div class="cart-summary total">
+                <span>Total</span>
+                <span class="value" id="cartTotal">RM 0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="goToCheckout()">
+                <i class="fas fa-lock"></i> Proceed to Checkout
+            </button>
+        </div>
+    </aside>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMsg">Added to cart</span>
+    </div>
+
+    <script>
+        let allProducts = [];
+        let currentFilter = 'all';
+
+        // ============================================================
+        // LOAD PRODUCTS
+        // ============================================================
+        async function loadProducts() {
+            try {
+                const res = await fetch('/api/products', { credentials: 'include' });
+                const data = await res.json();
+                if (data.success) {
+                    allProducts = data.products;
+                    renderProducts();
+                }
+            } catch (e) {
+                console.error('Load products error:', e);
+                document.getElementById('productsGrid').innerHTML =
+                    '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#8b9099;">Failed to load products.</div>';
+            }
+        }
+
+        function setFilter(category, btn) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderProducts();
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const filtered = currentFilter === 'all'
+                ? allProducts
+                : allProducts.filter(p => p.category === currentFilter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#8b9099;">No products in this category.</div>';
+                return;
+            }
+
+            grid.innerHTML = filtered.map(p => {
+                const hasDiscount = p.original_price && p.original_price > p.price;
+                const badgeClass = p.badge === 'SAVE 15%' || p.badge === '50% OFF' ? 'green' : '';
+
+                return `
+                    <div class="product-card" onclick="viewProduct('${p.slug}')">
+                        <div style="position:relative;">
+                            <img src="${p.image_url || 'https://via.placeholder.com/400x220/171a21/8b9099?text=OBD'}"
+                                 alt="${p.name}" class="product-image"
+                                 onerror="this.src='https://via.placeholder.com/400x220/171a21/8b9099?text=OBD'">
+                            ${p.badge ? `<span class="product-badge ${badgeClass}">${p.badge}</span>` : ''}
+                        </div>
+                        <div class="product-body">
+                            <div class="product-category">${p.category}</div>
+                            <div class="product-name">${p.name}</div>
+                            <div class="product-desc">${p.short_description || ''}</div>
+                            <div class="product-footer">
+                                <div class="price-box">
+                                    <div class="price-current">${Number(p.price).toFixed(2)}</div>
+                                    ${hasDiscount ? `<div class="price-original">${Number(p.original_price).toFixed(2)}</div>` : ''}
+                                </div>
+                                <button class="add-btn" onclick="event.stopPropagation(); addToCart('${p.id}')">
+                                    <i class="fas fa-plus"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function viewProduct(slug) {
+            window.location.href = '/products/' + slug;
+        }
+
+        // ============================================================
+        // CART
+        // ============================================================
+        async function addToCart(productId, quantity = 1) {
+            try {
+                const res = await fetch('/api/cart/add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ product_id: productId, quantity })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    updateCartCount(data.count);
+                    showToast('Added to cart');
+                    openCart();
+                } else {
+                    showToast(data.error || 'Failed to add', true);
+                }
+            } catch (e) {
+                console.error('Add to cart error:', e);
+                showToast('Network error', true);
+            }
+        }
+
+        async function loadCart() {
+            try {
+                const res = await fetch('/api/cart', { credentials: 'include' });
+                const data = await res.json();
+                if (data.success) {
+                    renderCart(data);
+                    updateCartCount(data.count);
+                }
+            } catch (e) {
+                console.error('Load cart error:', e);
+            }
+        }
+
+        function renderCart(data) {
+            const body = document.getElementById('cartBody');
+            const footer = document.getElementById('cartFooter');
+
+            if (!data.items || data.items.length === 0) {
+                body.innerHTML = `
+                    <div class="cart-empty">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>Your cart is empty</p>
+                    </div>`;
+                footer.style.display = 'none';
+                return;
+            }
+
+            body.innerHTML = data.items.map(item => `
+                <div class="cart-item">
+                    <img src="${item.image_url || 'https://via.placeholder.com/70/171a21/8b9099?text=OBD'}"
+                         alt="${item.name}" class="cart-item-img"
+                         onerror="this.src='https://via.placeholder.com/70/171a21/8b9099?text=OBD'">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">RM ${item.price.toFixed(2)}</div>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="updateQty('${item.product_id}', ${item.quantity - 1})">−</button>
+                            <span class="qty-value">${item.quantity}</span>
+                            <button class="qty-btn" onclick="updateQty('${item.product_id}', ${item.quantity + 1})">+</button>
+                        </div>
+                    </div>
+                    <button class="remove-btn" onclick="removeItem('${item.product_id}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+
+            footer.style.display = 'block';
+
+            const subtotal = data.subtotal;
+            const tax = subtotal * 0.06;
+            const shipping = subtotal >= 500 ? 0 : 25;
+            const total = subtotal + tax + shipping;
+
+            document.getElementById('cartSubtotal').textContent = `RM ${subtotal.toFixed(2)}`;
+            document.getElementById('cartTax').textContent = `RM ${tax.toFixed(2)}`;
+            document.getElementById('cartShipping').textContent = shipping === 0 ? 'FREE' : `RM ${shipping.toFixed(2)}`;
+            document.getElementById('cartTotal').textContent = `RM ${total.toFixed(2)}`;
+        }
+
+        async function updateQty(productId, quantity) {
+            try {
+                const res = await fetch('/api/cart/update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ product_id: productId, quantity })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    loadCart();
+                }
+            } catch (e) {
+                console.error('Update qty error:', e);
+            }
+        }
+
+        async function removeItem(productId) {
+            try {
+                const res = await fetch('/api/cart/remove', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ product_id: productId })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    loadCart();
+                    showToast('Removed from cart');
+                }
+            } catch (e) {
+                console.error('Remove error:', e);
+            }
+        }
+
+        function updateCartCount(count) {
+            const el = document.getElementById('cartCount');
+            if (count > 0) {
+                el.textContent = count;
+                el.style.display = 'inline-flex';
+            } else {
+                el.style.display = 'none';
+            }
+        }
+
+        // ============================================================
+        // CART DRAWER
+        // ============================================================
+        function openCart() {
+            document.getElementById('cartDrawer').classList.add('active');
+            document.getElementById('cartOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            loadCart();
+        }
+
+        function closeCart() {
+            document.getElementById('cartDrawer').classList.remove('active');
+            document.getElementById('cartOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function goToCheckout() {
+            window.location.href = '/checkout';
+        }
+
+        // ============================================================
+        // TOAST
+        // ============================================================
+        let toastTimer;
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.style.background = isError ? '#E30613' : '#25D366';
+            toast.style.color = isError ? 'white' : '#000';
+            toast.classList.add('show');
+
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        window.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            loadCart();
+        });
+    </script>
+</body>
+</html>

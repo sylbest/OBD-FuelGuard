@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product | OBD-FuelGuard</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent-red: #E30613; --accent-green: #25D366;
+            --bg-dark: #0f1115; --bg-card: #171a21;
+            --border: #262a33; --text: #e5e7eb; --text-muted: #8b9099;
+        }
+        * { box-sizing: border-box; padding: 0; margin: 0; font-family: 'Roboto', sans-serif; }
+        body { background: var(--bg-dark); color: var(--text); min-height: 100vh; }
+
+        .top-nav {
+            background: #0a0c10; border-bottom: 1px solid var(--border);
+            padding: 0 30px; height: 64px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .brand { font-size: 20px; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; }
+        .brand span { color: var(--accent-red); }
+        .nav-links { display: flex; align-items: center; gap: 25px; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; }
+        .nav-links a:hover { color: white; }
+
+        .page-wrap { max-width: 1200px; margin: 0 auto; padding: 40px 30px; }
+
+        .breadcrumb {
+            font-size: 13px; color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+        .breadcrumb a { color: var(--text-muted); text-decoration: none; }
+        .breadcrumb a:hover { color: var(--accent-red); }
+
+        .product-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .product-image-wrap {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+
+        .product-image {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info h1 {
+            font-size: 32px; font-weight: 900;
+            line-height: 1.2; margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .product-badge {
+            display: inline-block;
+            background: var(--accent-red); color: white;
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 1px; padding: 5px 12px;
+            border-radius: 4px; text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            display: flex; align-items: baseline; gap: 12px;
+            margin-bottom: 25px;
+        }
+        .price-current {
+            font-size: 36px; font-weight: 900;
+            color: white; font-family: 'JetBrains Mono', monospace;
+        }
+        .price-current::before { content: 'RM '; font-size: 18px; color: var(--text-muted); }
+        .price-original {
+            font-size: 18px; color: var(--text-muted);
+            text-decoration: line-through;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .price-original::before { content: 'RM '; }
+
+        .product-description {
+            font-size: 15px; line-height: 1.7;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .qty-row {
+            display: flex; align-items: center; gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .qty-label { font-size: 12px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 1px; }
+
+        .qty-controls { display: flex; align-items: center; gap: 10px; }
+        .qty-btn {
+            width: 40px; height: 40px;
+            border-radius: 6px; background: var(--bg-card);
+            border: 1px solid var(--border); color: var(--text);
+            cursor: pointer; font-size: 16px;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s;
+        }
+        .qty-btn:hover { border-color: var(--accent-red); color: var(--accent-red); }
+        .qty-value { min-width: 40px; text-align: center; font-weight: 700; font-size: 16px; font-family: 'JetBrains Mono', monospace; }
+
+        .add-btn-large {
+            width: 100%; padding: 18px;
+            background: var(--accent-red); color: white;
+            border: none; border-radius: 8px;
+            font-size: 14px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            cursor: pointer; transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .add-btn-large:hover { background: #000; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+        .features {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border);
+        }
+        .features h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; color: var(--text-muted); }
+        .feature-list { list-style: none; }
+        .feature-list li {
+            padding: 8px 0; font-size: 14px;
+            display: flex; align-items: center; gap: 10px;
+            color: var(--text-muted);
+        }
+        .feature-list li i { color: var(--accent-green); }
+
+        .loading { text-align: center; padding: 100px 20px; color: var(--text-muted); }
+        .loading i { font-size: 36px; color: var(--accent-red); margin-bottom: 20px; }
+
+        @media (max-width: 900px) {
+            .product-layout { grid-template-columns: 1fr; gap: 30px; }
+            .product-info h1 { font-size: 24px; }
+            .page-wrap { padding: 20px 15px; }
+            .top-nav { padding: 0 15px; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="brand">SUS<span>.</span></div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/products">Shop</a>
+            <a href="/obd-dashboard">Live OBD</a>
+            <a href="/profile">Profile</a>
+        </div>
+    </nav>
+
+    <div class="page-wrap" id="pageWrap">
+        <div class="loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading product...</p>
+        </div>
+    </div>
+
+    <script>
+        const slug = window.location.pathname.split('/').pop();
+        let product = null;
+        let qty = 1;
+
+        async function loadProduct() {
+            try {
+                const res = await fetch('/api/products/' + slug);
+                const data = await res.json();
+                if (data.success) {
+                    product = data.product;
+                    document.title = product.name + ' | OBD-FuelGuard';
+                    render();
+                } else {
+                    document.getElementById('pageWrap').innerHTML = `
+                        <div class="loading">
+                            <i class="fas fa-exclamation-circle" style="color:var(--accent-red);"></i>
+                            <p>Product not found</p>
+                            <a href="/products" style="color:var(--accent-red);text-decoration:none;margin-top:15px;display:inline-block;">← Back to shop</a>
+                        </div>`;
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function render() {
+            const hasDiscount = product.original_price && product.original_price > product.price;
+
+            document.getElementById('pageWrap').innerHTML = `
+                <div class="breadcrumb">
+                    <a href="/products">Shop</a> &nbsp;/&nbsp; ${product.name}
+                </div>
+
+                <div class="product-layout">
+                    <div class="product-image-wrap">
+                        <img src="${product.image_url}" alt="${product.name}" class="product-image"
+                             onerror="this.src='https://via.placeholder.com/600/171a21/8b9099?text=OBD'">
+                    </div>
+
+                    <div class="product-info">
+                        ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
+                        <h1>${product.name}</h1>
+
+                        <div class="product-price">
+                            <span class="price-current">${Number(product.price).toFixed(2)}</span>
+                            ${hasDiscount ? `<span class="price-original">${Number(product.original_price).toFixed(2)}</span>` : ''}
+                        </div>
+
+                        <div class="product-description">
+                            ${product.description || product.short_description || ''}
+                        </div>
+
+                        <div class="qty-row">
+                            <span class="qty-label">Quantity</span>
+                            <div class="qty-controls">
+                                <button class="qty-btn" onclick="changeQty(-1)">−</button>
+                                <span class="qty-value" id="qtyValue">1</span>
+                                <button class="qty-btn" onclick="changeQty(1)">+</button>
+                            </div>
+                        </div>
+
+                        <button class="add-btn-large" onclick="addToCart()">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+
+                        <div class="features">
+                            <h3>Why choose this product</h3>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check-circle"></i> Official OBD-FuelGuard hardware</li>
+                                <li><i class="fas fa-check-circle"></i> Free shipping on orders over RM 500</li>
+                                <li><i class="fas fa-check-circle"></i> 30-day money-back guarantee</li>
+                                <li><i class="fas fa-check-circle"></i> Dedicated technical support</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('qtyValue').textContent = qty;
+        }
+
+        function changeQty(delta) {
+            qty = Math.max(1, qty + delta);
+            const el = document.getElementById('qtyValue');
+            if (el) el.textContent = qty;
+        }
+
+        async function addToCart() {
+            try {
+                const res = await fetch('/api/cart/add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ product_id: product.id, quantity: qty })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    window.location.href = '/cart';
+                } else {
+                    alert(data.error || 'Failed to add');
+                }
+            } catch (e) {
+                alert('Network error');
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', loadProduct);
+    </script>
+</body>
+</html>

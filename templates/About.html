@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- ===== SEO: IMPROVED TITLE ===== -->
+    <title>About Us | SUS Company - OBD-FuelGuard Fuel Subsidy Verification</title>
+
+    <!-- ===== SEO: META DESCRIPTION ===== -->
+    <meta name="description" content="Learn about SUS Company, the Malaysian tech firm behind OBD-FuelGuard — building a transparent, tamper-proof fuel subsidy verification system for Malaysia.">
+
+    <!-- ===== SEO: KEYWORDS ===== -->
+    <meta name="keywords" content="SUS Company, OBD-FuelGuard, fuel subsidy Malaysia, about SUS, OBD-RFID technology, BUDI MADANI">
+
+    <!-- ===== SEO: CANONICAL ===== -->
+    <link rel="canonical" href="https://obd-fuelguard.com/about.html">
+
+    <!-- ===== SEO: ROBOTS ===== -->
+    <meta name="robots" content="index, follow">
+
+    <!-- ===== SEO: OPEN GRAPH ===== -->
+    <meta property="og:title" content="About Us | SUS Company - OBD-FuelGuard">
+    <meta property="og:description" content="Building a smarter, fairer, and more transparent fuel subsidy ecosystem for Malaysia.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://obd-fuelguard.com/about.html">
+    <meta property="og:image" content="https://obd-fuelguard.com/images/og-about.jpg">
+    <meta property="og:site_name" content="OBD-FuelGuard">
+
+    <!-- ===== SEO: TWITTER CARD ===== -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About Us | SUS Company">
+    <meta name="twitter:description" content="Building a smarter, fairer, and more transparent fuel subsidy ecosystem for Malaysia.">
+
+    <!-- ===== FAVICON ===== -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+    <!-- ===== SCHEMA: AboutPage ===== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "About SUS Company",
+      "url": "https://obd-fuelguard.com/about.html",
+      "description": "SUS Company is a Malaysian technology firm building smart, transparent, and accountable solutions for the nation's fuel subsidy ecosystem.",
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "SUS Company",
+        "url": "https://obd-fuelguard.com",
+        "logo": "https://obd-fuelguard.com/images/logo.png",
+        "foundingLocation": "Malaysia",
+        "description": "Specializing in OBD-RFID integration, vehicle verification technology, and real-time data analytics."
+      }
+    }
+    </script>
+
+    <!-- ===== SCHEMA: Breadcrumb ===== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://obd-fuelguard.com/"},
+        {"@type": "ListItem", "position": 2, "name": "About Us", "item": "https://obd-fuelguard.com/about.html"}
+      ]
+    }
+    </script>
+
+    <!-- ===== GOOGLE ANALYTICS ===== -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navi.css') }}">
+
+    <!-- ===== PROFESSIONAL SVG ICON STYLES ===== -->
+    <style>
+        
+        /* Base SVG icon defaults */
+        .icon {
+            width: 1em;
+            height: 1em;
+            display: inline-block;
+            vertical-align: -0.125em;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        /* Solution / value card icons: circular badge */
+        .value-card .icon,
+        .solution-card .icon {
+            width: 64px;
+            height: 64px;
+            padding: 16px;
+            background: rgba(230, 57, 70, 0.10);
+            color: #e63946;
+            border-radius: 50%;
+            margin-bottom: 18px;
+            box-sizing: border-box;
+        }
+
+        /* Government callout — big building icon */
+        .gov-badge .icon {
+            width: 56px;
+            height: 56px;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        /* Small inline checkmarks in the partnership list */
+        .partnership-list .icon {
+            width: 20px;
+            height: 20px;
+            color: #e63946;
+        }
+
+        /* Social icons in footer */
+        .social-icons a .footer-icon {
+            width: 18px;
+            height: 18px;
+            display: block;
+            color: #ffffff;
+            fill: currentColor;
+            transition: color 0.25s;
+        }
+
+        /* Download store icons */
+        .store-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            align-items: center;
+        }
+        .store-icons .icon {
+            width: 26px;
+            height: 26px;
+            color: #ccc;
+            transition: color 0.25s;
+        }
+        .store-icons .icon:hover {
+            color: #e63946;
+        }
+
+        /* Center helper for grid icons */
+        .value-card,
+        .solution-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* ===== CENTER "HOW IT WORKS" FLOW SECTION ===== */
+        .flow-section .flow-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .flow-section .text-center {
+            text-align: center;
+            width: 100%;
+        }
+
+        .flow-steps {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 15px;
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        .flow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 110px;
+            max-width: 140px;
+            flex: 1 1 110px;
+        }
+
+        .flow-step .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--accent-red, #e63946);
+            color: #fff;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .flow-step h5 {
+            margin: 0 0 6px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .flow-step p {
+            margin: 0;
+            font-size: 12.5px;
+            line-height: 1.5;
+            color: #bbb;
+        }
+
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: var(--accent-red, #e63946);
+            font-weight: 700;
+            padding: 0 5px;
+            margin-top: 10px;
+            flex-shrink: 0;
+        }
+
+        /* Hide arrows on mobile when steps wrap */
+        @media (max-width: 780px) {
+            .flow-arrow {
+                display: none;
+            }
+            .flow-steps {
+                gap: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== PROMO BANNER (Limited Offer) ===== -->
+    <div class="promo-banner">
+        🎉 <strong>LIMITED OFFER:</strong> Get <strong>50% OFF</strong> subscription fee for first-month adopters.
+        <span class="countdown" id="countdown">Loading...</span>
+    </div>
+
+    <!-- ===== HEADER (server-side include) ===== -->
+    {% include 'header.html' %}
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="page-header-content">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> &gt; About Us
+            </div>
+            <h1>About <span>SUS</span></h1>
+            <p>Building a smarter, fairer, and more transparent fuel subsidy ecosystem for Malaysia.</p>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="section section-light">
+        <div class="about-grid">
+            <div>
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop"
+                     alt="SUS Company team working on OBD-RFID fuel subsidy verification technology"
+                     class="about-image">
+            </div>
+            <div class="about-text">
+                <h2>Who We <span>Are</span></h2>
+                <p><strong>SUS Company</strong> is a Malaysian technology firm dedicated to building smart, transparent, and accountable solutions for the nation's fuel subsidy ecosystem.</p>
+                <p>We specialize in <strong>OBD-RFID integration</strong>, <strong>vehicle verification technology</strong>, and <strong>real-time data analytics</strong> for government and commercial fleet applications.</p>
+                <p>Founded with a mission to eliminate fuel subsidy leakage, we combine hardware innovation with intelligent software to create a system that ensures every subsidized liter reaches its intended vehicle—and every intended vehicle only.</p>
+                <a href="solution.html" class="btn">Learn More About Our Solution</a>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="about-stats" style="max-width: 800px; margin: 60px auto 0;">
+            <div class="stat-item">
+                <div class="stat-number">RM179M+</div>
+                <div class="stat-label">Subsidy Leakage Prevented</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">VIN Verification Accuracy</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">16M+</div>
+                <div class="stat-label">Malaysians Protected</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Values (Dark) -->
+    <section class="section section-dark">
+        <div class="text-center">
+            <h2 class="section-title">Our <span>Values</span></h2>
+            <p class="section-subtitle section-subtitle-light">The principles that guide everything we do.</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <h4>Integrity</h4>
+                <p>We build systems that are honest, transparent, and tamper-proof.</p>
+            </div>
+            <div class="value-card">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9 18h6"/>
+                    <path d="M10 22h4"/>
+                    <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>
+                </svg>
+                <h4>Innovation</h4>
+                <p>We leverage cutting-edge OBD-RFID technology to solve real problems.</p>
+            </div>
+            <div class="value-card">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m11 17 2 2a1 1 0 1 0 3-3"/>
+                    <path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/>
+                    <path d="m21 3 1 11h-2"/>
+                    <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/>
+                    <path d="M3 4h8"/>
+                </svg>
+                <h4>Collaboration</h4>
+                <p>We work hand-in-hand with the Government and industry partners.</p>
+            </div>
+            <div class="value-card">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.5 2a6 6 0 0 0 3.5-1 1 1 0 0 1 1 .8v9a1 1 0 0 1-.4.8A6 6 0 0 1 16 14c-3 0-5-2-7.5-2A6 6 0 0 0 4 13"/>
+                </svg>
+                <h4>National Interest</h4>
+                <p>We are committed to protecting Malaysia's resources for future generations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Overview -->
+    <section class="section section-gray">
+        <div class="text-center">
+            <h2 class="section-title">Our <span>Solution</span></h2>
+            <p class="section-subtitle">OBD-FuelGuard is a smart, tamper-proof fuel subsidy verification system that connects vehicles, petrol stations, and subsidy records.</p>
+        </div>
+        <div class="solution-grid">
+            <div class="solution-card">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="4" y="4" width="16" height="16" rx="2"/>
+                    <rect x="9" y="9" width="6" height="6"/>
+                    <path d="M9 2v2"/>
+                    <path d="M15 2v2"/>
+                    <path d="M9 20v2"/>
+                    <path d="M15 20v2"/>
+                    <path d="M2 9h2"/>
+                    <path d="M2 15h2"/>
+                    <path d="M20 9h2"/>
+                    <path d="M20 15h2"/>
+                </svg>
+                <h4>OBD-RFID Hardware</h4>
+                <p>Plug-and-play device that reads VIN and engine data in real-time. Tamper-proof design prevents unauthorized removal or modification.</p>
+            </div>
+            <div class="solution-card">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="m9 12 2 2 4-4"/>
+                </svg>
+                <h4>VIN Verification</h4>
+                <p>Real-time eligibility checks at the pump. Only verified vehicles on the subsidy list can access subsidized fuel.</p>
+            </div>
+            <div class="solution-card">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 3v18h18"/>
+                    <path d="m19 9-5 5-4-4-3 3"/>
+                </svg>
+                <h4>Analytics Dashboard</h4>
+                <p>Track fuel consumption, transaction history, and vehicle performance. Generate audit-ready reports for government reconciliation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Flow -->
+    <section class="flow-section">
+        <div class="flow-container">
+            <div class="text-center">
+                <h2 class="section-title">How It <span>Works</span></h2>
+                <p class="section-subtitle section-subtitle-light">From vehicle to verification—in six simple steps.</p>
+            </div>
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <h5>Vehicle</h5>
+                    <p>Vehicle arrives at petrol station</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <h5>OBD</h5>
+                    <p>OBD device reads VIN &amp; data</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <h5>RFID</h5>
+                    <p>RFID authenticates vehicle identity</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <h5>VIN Verify</h5>
+                    <p>System checks eligibility database</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-number">5</div>
+                    <h5>Fuel</h5>
+                    <p>Subsidized fuel is dispensed</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-number">6</div>
+                    <h5>Record</h5>
+                    <p>Digital audit trail created</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Government Partnership Callout -->
+    <section class="section section-light">
+        <div style="background: #f0f0f0; padding: 60px; border-radius: 12px; border-left: 5px solid var(--accent-red); max-width: 1000px; margin: 0 auto;">
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: center;">
+                <div>
+                    <h3 style="font-size: 28px; text-transform: uppercase; margin-bottom: 15px;">Official Government <span style="color: var(--accent-red);">Partnership</span></h3>
+                    <p style="font-size: 16px; line-height: 1.8; color: #555;">SUS Company is proud to collaborate with the Government of Malaysia as the official technology partner for the National Fuel Subsidy Verification Program.</p>
+                    <ul class="partnership-list" style="margin-top: 20px; list-style: none; padding: 0;">
+                        <li style="padding: 8px 0; border-bottom: 1px solid #ddd; display: flex; align-items: center; gap: 10px;">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="m9 12 2 2 4-4"/>
+                            </svg>
+                            Fully aligned with BUDI MADANI framework
+                        </li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid #ddd; display: flex; align-items: center; gap: 10px;">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="m9 12 2 2 4-4"/>
+                            </svg>
+                            Real-time VIN-based authentication
+                        </li>
+                        <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="m9 12 2 2 4-4"/>
+                            </svg>
+                            Tamper-proof digital audit trail
+                        </li>
+                    </ul>
+                </div>
+                <div style="text-align: center;">
+                    <div class="gov-badge" style="background: var(--accent-red); color: white; padding: 30px; border-radius: 8px; display: flex; flex-direction: column; align-items: center;">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
+                            <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/>
+                            <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/>
+                            <path d="M10 6h4"/>
+                            <path d="M10 10h4"/>
+                            <path d="M10 14h4"/>
+                            <path d="M10 18h4"/>
+                        </svg>
+                        <h4 style="text-transform: uppercase; margin: 0 0 5px;">Government</h4>
+                        <p style="font-size: 14px; opacity: 0.8; margin: 0;">Technology Partner</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA SECTION ===== -->
+    <section class="cta-section">
+        <h2>Ready to See It <span>in Action?</span></h2>
+        <p>Request a free demo and see how OBD-FuelGuard can eliminate subsidy leakage for your organization.</p>
+        <a href="index.html#request-demo" class="btn">Request a Demo</a>
+        <a href="whitepaper.pdf" class="btn btn-outline" download>Download Whitepaper</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Corporate</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="solution.html">Our Solution</a></li>
+                    <li><a href="government.html">Government Partnership</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Talk To Us</h4>
+                <ul>
+                    <li>English / BM / 中文</li>
+                    <li><a href="contact.html">Customer Support</a></li>
+                    <li>1-800-888-838</li>
+                    <li>info@suscompany.com</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="whitepaper.pdf" download>Whitepaper</a></li>
+                    <li><a href="case-studies.html">Case Studies</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="https://facebook.com/obdfuelguard" aria-label="Facebook" target="_blank" rel="noopener">
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99A10 10 0 0 0 22 12z"/>
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com/obdfuelguard" aria-label="Twitter / X" target="_blank" rel="noopener">
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="https://instagram.com/obdfuelguard" aria-label="Instagram" target="_blank" rel="noopener">
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 1.8c-3.15 0-3.5.01-4.74.07-1.14.05-1.76.24-2.17.4-.55.21-.94.47-1.35.88-.41.41-.67.8-.88 1.35-.16.41-.35 1.03-.4 2.17-.06 1.24-.07 1.59-.07 4.74s.01 3.5.07 4.74c.05 1.14.24 1.76.4 2.17.21.55.47.94.88 1.35.41.41.8.67 1.35.88.41.16 1.03.35 2.17.4 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c1.14-.05 1.76-.24 2.17-.4.55-.21.94-.47 1.35-.88.41-.41.67-.8.88-1.35.16-.41.35-1.03.4-2.17.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.05-1.14-.24-1.76-.4-2.17a3.6 3.6 0 0 0-.88-1.35 3.6 3.6 0 0 0-1.35-.88c-.41-.16-1.03-.35-2.17-.4-1.24-.06-1.59-.07-4.74-.07zM12 6.86a5.14 5.14 0 1 0 0 10.28 5.14 5.14 0 0 0 0-10.28zm0 8.47a3.33 3.33 0 1 1 0-6.66 3.33 3.33 0 0 1 0 6.66zm6.54-8.67a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/>
+                        </svg>
+                    </a>
+                    <a href="https://linkedin.com/company/obdfuelguard" aria-label="LinkedIn" target="_blank" rel="noopener">
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.23 0z"/>
+                        </svg>
+                    </a>
+                    <a href="https://youtube.com/@obdfuelguard" aria-label="YouTube" target="_blank" rel="noopener">
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M23.5 6.2a3 3 0 0 0-2.11-2.12C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.39.53A3 3 0 0 0 .5 6.2C0 8.08 0 12 0 12s0 3.92.5 5.8a3 3 0 0 0 2.11 2.12c1.89.53 9.39.53 9.39.53s7.5 0 9.39-.53a3 3 0 0 0 2.11-2.12c.5-1.88.5-5.8.5-5.8s0-3.92-.5-5.8zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/>
+                        </svg>
+                    </a>
+                </div>
+                <h4 style="margin-top: 30px;">Download</h4>
+                <div class="store-icons">
+                    <a href="#" aria-label="Download on the App Store">
+                        <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Get it on Google Play">
+                        <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M3.609 1.814 13.792 12 3.61 22.186a1.5 1.5 0 0 1-.61-1.207V3.021c0-.485.233-.907.609-1.207zm10.9 10.903 2.302-2.303 4.28 2.462c1 .575.999 1.517 0 2.093l-4.28 2.463-2.303-2.303 2.303-2.302-2.303-2.11zM5.322 1.32l8.895 5.116-2.11 2.11L5.322 1.32zm0 21.36 6.785-7.226 2.11 2.11L5.322 22.68z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-left">
+                <a href="terms.html">Terms &amp; Conditions</a>
+                <a href="privacy.html">Privacy Notice</a>
+                <a href="cookies.html">Cookie Policy</a>
+            </div>
+            <span>&copy; 2026 SUS Company. All Rights Reserved.</span>
+        </div>
+    </footer>
+
+    <!-- ===== FLOATING WHATSAPP ===== -->
+    <a href="https://wa.me/60123456789?text=Hi%2C%20I%27m%20interested%20in%20OBD-FuelGuard"
+       class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+        <svg class="icon" viewBox="0 0 24 24" fill="currentColor" style="width: 26px; height: 26px;" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+        </svg>
+    </a>
+
+    <!-- ===== COOKIE BANNER ===== -->
+    <div class="cookie-banner" id="cookieBanner">
+        <span>We use cookies to enhance your experience. By continuing, you agree to our <a href="cookies.html">Cookie Policy</a> and <a href="privacy.html">Privacy Notice</a>.</span>
+        <button onclick="acceptCookies()">Accept</button>
+    </div>
+
+    <script>
+    // ===== COOKIE BANNER =====
+    function acceptCookies() {
+        document.getElementById('cookieBanner').style.display = 'none';
+        localStorage.setItem('cookiesAccepted', 'true');
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'cookie_accept', { 'event_category': 'engagement' });
+        }
+    }
+    if (localStorage.getItem('cookiesAccepted') === 'true') {
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
+
+    // ===== COUNTDOWN TIMER (Limited Offer) =====
+    function startCountdown() {
+        let endDate = localStorage.getItem('offerEndDate');
+        if (!endDate) {
+            endDate = new Date().getTime() + (30 * 24 * 60 * 60 * 1000);
+            localStorage.setItem('offerEndDate', endDate);
+        }
+        endDate = parseInt(endDate);
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = endDate - now;
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById('countdown').innerHTML = 'OFFER ENDED';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML =
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }, 1000);
+    }
+    startCountdown();
+    </script>
+</body>
+</html>

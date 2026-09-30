@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Live OBD Dashboard | OBD-FuelGuard</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/obd.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navi.css') }}"> 
+
+</head>
+<body>
+
+    <!-- ===== TOP NAV ===== -->
+    {% include 'header.html' %}
+
+    <!-- ===== PAGE ===== -->
+    <div class="page-wrap">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h1>Live OBD Dashboard</h1>
+                <p>Real-time vehicle telemetry — auto-refreshing every 3 seconds</p>
+            </div>
+            <div class="page-controls">
+                <select id="plateFilter" onchange="changePlate()">
+                    <option value="">All Vehicles</option>
+                </select>
+                <button class="control-btn active" id="liveToggle" onclick="toggleLive()">
+                    <i class="fas fa-pause"></i> Live
+                </button>
+                <button class="control-btn" onclick="refreshNow()">
+                    <i class="fas fa-sync"></i> Refresh
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <i class="fas fa-car icon"></i>
+                <div class="label">Active Vehicles</div>
+                <div class="value" id="statVehicles">--</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-road icon"></i>
+                <div class="label">Total Distance</div>
+                <div class="value"><span id="statDistance">--</span><span class="unit">km</span></div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-gas-pump icon"></i>
+                <div class="label">Fuel Burned</div>
+                <div class="value"><span id="statFuel">--</span><span class="unit">L</span></div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-tachometer-alt icon"></i>
+                <div class="label">Avg Economy</div>
+                <div class="value"><span id="statEconomy">--</span><span class="unit">km/L</span></div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-play-circle icon"></i>
+                <div class="label">Engine Running</div>
+                <div class="value" id="statRunning">--</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-database icon"></i>
+                <div class="label">Records</div>
+                <div class="value" id="statRecords">--</div>
+            </div>
+        </div>
+
+        <!-- Main Grid: Vehicles + Live Data -->
+        <div class="main-grid">
+
+            <!-- Vehicle List -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-list"></i> Vehicles</h3>
+                    <span class="badge" id="vehicleCount">0</span>
+                </div>
+                <div class="vehicle-list" id="vehicleList">
+                    <div class="empty-state">
+                        <i class="fas fa-car"></i>
+                        <p>Waiting for data...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Data Grid -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-satellite-dish"></i> Live Telemetry</h3>
+                    <span class="badge" id="lastUpdate">--</span>
+                </div>
+                <div class="live-grid" id="liveGrid">
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <i class="fas fa-satellite-dish"></i>
+                        <p>Select a vehicle to view live data</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart Panel -->
+        <div class="chart-panel">
+            <h3><i class="fas fa-chart-line"></i> Recent History</h3>
+            <div class="chart-wrap">
+                <canvas id="historyChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Map / GPS Panel -->
+        <div class="map-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-map-marker-alt"></i> GPS Location</h3>
+            </div>
+            <div class="map-content">
+                <div class="map-item">
+                    <div class="label">Latitude</div>
+                    <div class="value" id="gpsLat">--</div>
+                </div>
+                <div class="map-item">
+                    <div class="label">Longitude</div>
+                    <div class="value" id="gpsLng">--</div>
+                </div>
+                <div class="map-item">
+                    <div class="label">Altitude</div>
+                    <div class="value"><span id="gpsAlt">--</span> m</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity Log -->
+        <div class="activity-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-history"></i> Activity Log</h3>
+                <span class="badge" id="activityCount">0</span>
+            </div>
+            <div class="activity-list" id="activityList">
+                <div class="empty-state" style="padding: 20px;">
+                    <p>No recent activity</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================================
+        // STATE
+        // ============================================================
+        let currentPlate = '';
+        let vehicles = {};        // plate -> latest record
+        let selectedPlate = null;
+        let liveEnabled = true;
+        let stream = null;
+        let historyChart = null;
+        let activityItems = [];
+        let lastTimestamps = {};  // plate -> last seen timestamp (for detecting new data)
+
+        // ============================================================
+        // UTILS
+        // ============================================================
+        function fmt(val, decimals = 1) {
+            if (val === null || val === undefined || val === '') return '--';
+            const n = Number(val);
+            if (isNaN(n)) return '--';
+            return n.toFixed(decimals);
+        }
+
+        function fmtInt(val) {
+            if (val === null || val === undefined || val === '') return '--';
+            const n = Number(val);
+            if (isNaN(n)) return '--';
+            return n.toLocaleString();
+        }
+
+        function fmtTime(iso) {
+            if (!iso) return '--';
+            try {
+                const d = new Date(iso);
+                return d.toLocaleTimeString('en-GB', { hour12: false });
+            } catch { return '--'; }
+        }
+
+        function timeAgo(iso) {
+            if (!iso) return '';
+            const diff = (Date.now() - new Date(iso).getTime()) / 1000;
+            if (diff < 60) return Math.floor(diff) + 's ago';
+            if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+            if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+            return Math.floor(diff / 86400) + 'd ago';
+        }
+
+        // ============================================================
+        // LOAD INITIAL DATA
+        // ============================================================
+        async function loadStats() {
+            try {
+                const res = await fetch('/api/obd/stats', { credentials: 'include' });
+                const data = await res.json();
+                if (data.success) {
+                    const s = data.stats;
+                    document.getElementById('statVehicles').textContent = s.active_vehicles;
+                    document.getElementById('statDistance').textContent = fmt(s.total_distance_km, 1);
+                    document.getElementById('statFuel').textContent = fmt(s.total_fuel_burned_l, 1);
+                    document.getElementById('statEconomy').textContent = fmt(s.avg_economy_kmL, 1);
+                    document.getElementById('statRunning').textContent = s.vehicles_running;
+                    document.getElementById('statRecords').textContent = fmtInt(s.total_records);
+                }
+            } catch (e) {
+                console.error('Stats error:', e);
+            }
+        }
+
+        async function loadVehicles() {
+            try {
+                const url = currentPlate ? `/api/obd/latest?plate=${encodeURIComponent(currentPlate)}` : '/api/obd/latest';
+                const res = await fetch(url, { credentials: 'include' });
+                const data = await res.json();
+                if (data.success) {
+                    // Build vehicles map
+                    vehicles = {};
+                    data.data.forEach(r => {
+                        vehicles[r.Plate_Number] = r;
+                    });
+
+                    // Update dropdown
+                    const dropdown = document.getElementById('plateFilter');
+                    const existingPlates = Array.from(dropdown.options).map(o => o.value).filter(v => v);
+                    const newPlates = data.plates || [];
+                    if (JSON.stringify(existingPlates.sort()) !== JSON.stringify(newPlates.sort())) {
+                        dropdown.innerHTML = '<option value="">All Vehicles</option>';
+                        newPlates.sort().forEach(p => {
+                            const opt = document.createElement('option');
+                            opt.value = p;
+                            opt.textContent = p;
+                            if (p === currentPlate) opt.selected = true;
+                            dropdown.appendChild(opt);
+                        });
+                    }
+
+                    renderVehicleList();
+
+                    // Auto-select first vehicle if none selected
+                    if (!selectedPlate && newPlates.length > 0) {
+                        selectPlate(newPlates[0]);
+                    } else if (selectedPlate && vehicles[selectedPlate]) {
+                        renderLiveData(vehicles[selectedPlate]);
+                    }
+                }
+            } catch (e) {
+                console.error('Vehicles error:', e);
+            }
+        }
+
+        // ============================================================
+        // RENDER VEHICLE LIST
+        // ============================================================
+        function renderVehicleList() {
+            const list = document.getElementById('vehicleList');
+            const plates = Object.keys(vehicles).sort();
+
+            document.getElementById('vehicleCount').textContent = plates.length;
+
+            if (plates.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-car"></i>
+                        <p>No vehicles with data yet</p>
+                    </div>`;
+                return;
+            }
+
+            list.innerHTML = plates.map(p => {
+                const v = vehicles[p];
+                const running = v.Engine_Running === true;
+                const statusClass = running ? 'running' : 'idle';
+                const statusText = running ? 'Engine Running' : 'Engine Off';
+                const speed = v.Speed_kmh || 0;
+
+                return `
+                    <div class="vehicle-item ${p === selectedPlate ? 'active' : ''}" onclick="selectPlate('${p}')">
+                        <div>
+                            <div class="plate">${p}</div>
+                            <div class="meta">${speed} km/h · ${statusText} · ${timeAgo(v.Timestamp)}</div>
+                        </div>
+                        <div class="status ${statusClass}"></div>
+                    </div>`;
+            }).join('');
+        }
+
+        // ============================================================
+        // SELECT A VEHICLE
+        // ============================================================
+        function selectPlate(plate) {
+            selectedPlate = plate;
+            renderVehicleList();
+
+            if (vehicles[plate]) {
+                renderLiveData(vehicles[plate]);
+            }
+
+            loadHistory(plate);
+        }
+
+        function changePlate() {
+            currentPlate = document.getElementById('plateFilter').value;
+            selectedPlate = null;
+            loadVehicles();
+            loadStats();
+        }
+
+        // ============================================================
+        // RENDER LIVE DATA GRID
+        // ============================================================
+        function renderLiveData(r) {
+            if (!r) return;
+
+            const grid = document.getElementById('liveGrid');
+            const prev = grid.dataset.lastUpdate || '';
+
+            const cells = [
+                { key: 'Plate Number', val: r.Plate_Number, unit: '' },
+                { key: 'Timestamp', val: fmtTime(r.Timestamp), unit: '' },
+                { key: 'RPM', val: fmtInt(r.RPM), unit: 'rpm' },
+                { key: 'Speed', val: fmt(r.Speed_kmh, 1), unit: 'km/h' },
+                { key: 'MAF', val: fmt(r.MAF_gs, 2), unit: 'g/s' },
+                { key: 'Throttle', val: fmt(r.Throttle_pct, 1), unit: '%' },
+                { key: 'Engine Load', val: fmt(r.Engine_Load_pct, 1), unit: '%' },
+                { key: 'Coolant Temp', val: fmt(r.Coolant_Temp_C, 1), unit: '°C' },
+                { key: 'Intake Temp', val: fmt(r.Intake_Temp_C, 1), unit: '°C' },
+                { key: 'Timing Advance', val: fmt(r.Timing_Advance_deg, 1), unit: '°' },
+                { key: 'Fuel Level', val: fmt(r.Fuel_Level_Liters, 2), unit: 'L' },
+                { key: 'Virtual Fuel', val: fmt(r.Virtual_Fuel_Level_pct, 1), unit: '%' },
+                { key: 'Fuel Burned', val: fmt(r.Fuel_Burned_L, 3), unit: 'L' },
+                { key: 'Total Fuel', val: fmt(r.Total_Fuel_L, 2), unit: 'L' },
+                { key: 'Distance', val: fmt(r.Distance_km, 2), unit: 'km' },
+                { key: 'Inst. Economy', val: fmt(r.Inst_Economy_kmL, 2), unit: 'km/L' },
+                { key: 'Engine Running', val: r.Engine_Running ? 'YES' : 'NO', unit: '' },
+            ];
+
+            grid.innerHTML = cells.map(c => {
+                const isUpdated = prev !== r.Timestamp;
+                return `
+                    <div class="data-cell">
+                        <div class="key">${c.key}</div>
+                        <div class="val ${isUpdated ? 'updated' : ''}">${c.val}<span class="unit">${c.unit}</span></div>
+                    </div>`;
+            }).join('');
+
+            grid.dataset.lastUpdate = r.Timestamp || '';
+
+            // Update GPS panel
+            document.getElementById('gpsLat').textContent = fmt(r.Latitude, 6);
+            document.getElementById('gpsLng').textContent = fmt(r.Longitude, 6);
+            document.getElementById('gpsAlt').textContent = fmt(r.Altitude_m, 1);
+
+            // Update timestamp badge
+            document.getElementById('lastUpdate').textContent = timeAgo(r.Timestamp);
+        }
+
+        // ============================================================
+        // HISTORY CHART
+        // ============================================================
+        async function loadHistory(plate) {
+            if (!plate) return;
+            try {
+                const res = await fetch(`/api/obd/history/${encodeURIComponent(plate)}?limit=50`, {
+                    credentials: 'include'
+                });
+                const data = await res.json();
+                if (data.success && data.data.length > 0) {
+                    renderChart(data.data);
+                }
+            } catch (e) {
+                console.error('History error:', e);
+            }
+        }
+
+        function renderChart(rows) {
+            const labels = rows.map(r => fmtTime(r.Timestamp));
+            const speedData = rows.map(r => Number(r.Speed_kmh) || 0);
+            const rpmData = rows.map(r => Number(r.RPM) || 0);
+            const fuelData = rows.map(r => Number(r.Fuel_Level_Liters) || 0);
+
+            const ctx = document.getElementById('historyChart').getContext('2d');
+
+            if (historyChart) historyChart.destroy();
+
+            historyChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Speed (km/h)',
+                            data: speedData,
+                            borderColor: '#0EA5E9',
+                            backgroundColor: 'rgba(14,165,233,0.1)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            pointRadius: 0,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'RPM',
+                            data: rpmData,
+                            borderColor: '#E30613',
+                            backgroundColor: 'rgba(227,6,19,0.1)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            pointRadius: 0,
+                            yAxisID: 'y1'
+                        },
+                        {
+                            label: 'Fuel (L)',
+                            data: fuelData,
+                            borderColor: '#25D366',
+                            backgroundColor: 'rgba(37,211,102,0.1)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            pointRadius: 0,
+                            yAxisID: 'y2'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: {
+                            labels: { color: '#8b9099', font: { size: 11 }, boxWidth: 12 }
+                        },
+                        tooltip: {
+                            backgroundColor: '#171a21',
+                            borderColor: '#262a33',
+                            borderWidth: 1,
+                            titleColor: '#fff',
+                            bodyColor: '#e5e7eb'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#8b9099', font: { size: 10 }, maxTicksLimit: 8 },
+                            grid: { color: '#262a33' }
+                        },
+                        y: {
+                            position: 'left',
+                            title: { display: true, text: 'Speed (km/h)', color: '#0EA5E9', font: { size: 10 } },
+                            ticks: { color: '#8b9099', font: { size: 10 } },
+                            grid: { color: '#262a33' }
+                        },
+                        y1: {
+                            position: 'right',
+                            title: { display: true, text: 'RPM', color: '#E30613', font: { size: 10 } },
+                            ticks: { color: '#8b9099', font: { size: 10 } },
+                            grid: { display: false }
+                        },
+                        y2: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // ============================================================
+        // ACTIVITY LOG
+        // ============================================================
+        function addActivity(plate, msg) {
+            const time = new Date().toLocaleTimeString('en-GB', { hour12: false });
+            activityItems.unshift({ time, plate, msg });
+            if (activityItems.length > 50) activityItems.pop();
+
+            const list = document.getElementById('activityList');
+            document.getElementById('activityCount').textContent = activityItems.length;
+
+            list.innerHTML = activityItems.map(a => `
+                <div class="activity-item">
+                    <span class="time">${a.time}</span>
+                    <span class="plate">${a.plate}</span>
+                    <span class="msg">${a.msg}</span>
+                </div>
+            `).join('');
+        }
+
+        // ============================================================
+        // LIVE STREAM (SSE)
+        // ============================================================
+        function startStream() {
+            if (stream) stream.close();
+            stream = new EventSource('/api/obd/stream');
+
+            stream.onmessage = function(e) {
+                try {
+                    const payload = JSON.parse(e.data);
+                    if (payload.type === 'update') {
+                        handleStreamData(payload);
+                    }
+                } catch (err) {
+                    console.error('Stream parse error:', err);
+                }
+            };
+
+            stream.onerror = function() {
+                console.warn('[Stream] Connection lost. Reconnecting...');
+                // EventSource auto-reconnects
+            };
+        }
+
+        function handleStreamData(payload) {
+            // Update vehicles map with new data
+            (payload.data || []).forEach(r => {
+                const p = r.Plate_Number;
+                if (!p) return;
+
+                const prevTs = lastTimestamps[p];
+                if (prevTs !== r.Timestamp) {
+                    // New record for this plate
+                    if (prevTs !== undefined) {
+                        addActivity(p, `Speed: ${r.Speed_kmh} km/h · RPM: ${r.RPM}`);
+                    }
+                    lastTimestamps[p] = r.Timestamp;
+                }
+
+                // Keep latest
+                if (!vehicles[p] || new Date(r.Timestamp) > new Date(vehicles[p].Timestamp)) {
+                    vehicles[p] = r;
+                }
+            });
+
+            renderVehicleList();
+
+            if (selectedPlate && vehicles[selectedPlate]) {
+                renderLiveData(vehicles[selectedPlate]);
+            }
+
+            // Refresh stats every ~10 stream ticks
+            if (Math.random() < 0.3) loadStats();
+        }
+
+        // ============================================================
+        // CONTROLS
+        // ============================================================
+        function toggleLive() {
+            liveEnabled = !liveEnabled;
+            const btn = document.getElementById('liveToggle');
+            if (liveEnabled) {
+                btn.classList.add('active');
+                btn.innerHTML = '<i class="fas fa-pause"></i> Live';
+                startStream();
+            } else {
+                btn.classList.remove('active');
+                btn.innerHTML = '<i class="fas fa-play"></i> Paused';
+                if (stream) { stream.close(); stream = null; }
+            }
+        }
+
+        function refreshNow() {
+            loadStats();
+            loadVehicles();
+            if (selectedPlate) loadHistory(selectedPlate);
+        }
+
+        // ============================================================
+        // LOGOUT
+        // ============================================================
+        async function logout() {
+            try {
+                await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+            } catch (e) {}
+            window.location.href = '/auth';
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('[OBD Dashboard] Starting...');
+            loadStats();
+            loadVehicles();
+            startStream();
+
+            // Periodic fallback refresh (in case stream drops)
+            setInterval(() => {
+                if (liveEnabled) {
+                    loadVehicles();
+                    loadStats();
+                }
+            }, 15000);
+        });
+    </script>
+</body>
+</html>

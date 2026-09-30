@@ -1,0 +1,36 @@
+# robots.txt for OBD-FuelGuard
+# Website: https://obd-fuelguard.com
+
+# Allow all search engines to crawl public pages
+User-agent: *
+Allow: /
+
+# Disallow admin and sensitive areas
+Disallow: /admin/
+Disallow: /login/
+Disallow: /wp-admin/
+Disallow: /cgi-bin/
+Disallow: /private/
+Disallow: /tmp/
+
+# Disallow duplicate content / search results
+Disallow: /search?
+Disallow: /*?s=
+Disallow: /*?redirect=
+
+# Allow important resources for rendering
+Allow: /images/
+Allow: /css/
+Allow: /js/
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.svg$
+Allow: /*.webp$
+
+# Sitemap location
+Sitemap: https://obd-fuelguard.com/sitemap.xml
+
+# Crawl delay (optional - be nice to servers)
+Crawl-delay: 1

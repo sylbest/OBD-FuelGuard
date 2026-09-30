@@ -1,0 +1,23 @@
+<!-- templates/header.html -->
+<nav class="navhead">
+    <div class="navhead-left">
+        <div class="navhead-logo">OBD<span>-FuelGuard</span></div>
+        <a href="/"      class="navhead-link {% if request.endpoint == 'index'      %}active{% endif %}">Home</a>
+        <a href="/aboutus"      class="navhead-link {% if request.endpoint == 'about'      %}active{% endif %}">About</a>
+        <a href="/products" class="navhead-link {% if request.endpoint == 'government' %}active{% endif %}">Product</a>
+        
+        {% if session.get('user_id') %}
+        {# Logged in: show user icon + name + logout #}
+        <a href="/obd-dashboard"    class="navhead-link {% if request.endpoint == 'contact'    %}active{% endif %}">Dashboard</a>
+        <a href="/cart"    class="navhead-link {% if request.endpoint == 'contact'    %}active{% endif %}">Cart</a>
+        <a href="/profile"    class="navhead-link {% if request.endpoint == 'contact'    %}active{% endif %}">Profile</a>
+                <a href="/logout"    class="navhead-link {% if request.endpoint == 'contact'    %}active{% endif %}">Logout</a>
+    {% else %}
+        <a href="/auth"    class="navhead-link {% if request.endpoint == 'contact'    %}active{% endif %}">Login</a>
+    {% endif %}
+    </div>
+    <div class="navhead-right">
+
+        <a href="contact.html" class="navhead-cta">Request Demo</a>
+    </div>
+</nav>

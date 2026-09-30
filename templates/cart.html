@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cart | OBD-FuelGuard</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navi.css') }}"> 
+</head>
+<body>
+
+    {% include 'header.html' %}
+
+    <div class="page-wrap">
+        <div class="page-header">
+            <h1>Shopping Cart</h1>
+            <p>Review your items and proceed to checkout.</p>
+        </div>
+
+        <div id="cartContainer">
+            <div style="text-align:center;padding:60px;color:#8b9099;">
+                <i class="fas fa-spinner fa-spin" style="font-size:32px;"></i>
+                <p style="margin-top:15px;">Loading cart...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadCart() {
+            try {
+                const res = await fetch('/api/cart', { credentials: 'include' });
+                const data = await res.json();
+                if (data.success) {
+                    renderCart(data);
+                }
+            } catch (e) {
+                console.error('Load cart error:', e);
+            }
+        }
+
+        function renderCart(data) {
+            const container = document.getElementById('cartContainer');
+
+            if (!data.items || data.items.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h2>Your cart is empty</h2>
+                        <p>Browse our products and add items to your cart.</p>
+                        <a href="/products" class="btn-red">
+                            <i class="fas fa-shopping-bag"></i> Browse Products
+                        </a>
+                    </div>`;
+                return;
+            }
+
+            const subtotal = data.subtotal;
+            const tax = subtotal * 0.06;
+            const shipping = subtotal >= 500 ? 0 : 25;
+            const total = subtotal + tax + shipping;
+
+            container.innerHTML = `
+                <div class="cart-layout">
+                    <div class="cart-panel">
+                        <h2><i class="fas fa-shopping-cart"></i> Cart Items (${data.count})</h2>
+                        ${data.items.map(item => `
+                            <div class="cart-item">
+                                <img src="${item.image_url || 'https://via.placeholder.com/90/171a21/8b9099?text=OBD'}"
+                                     alt="${item.name}" class="cart-item-img"
+                                     onerror="this.src='https://via.placeholder.com/90/171a21/8b9099?text=OBD'">
+                                <div class="cart-item-info">
+                                    <h3>${item.name}</h3>
+                                    <div class="unit-price">RM ${item.price.toFixed(2)} each</div>
+                                    <div class="qty-controls">
+                                        <button class="qty-btn" onclick="updateQty('${item.product_id}', ${item.quantity - 1})">−</button>
+                                        <span class="qty-value">${item.quantity}</span>
+                                        <button class="qty-btn" onclick="updateQty('${item.product_id}', ${item.quantity + 1})">+</button>
+                                    </div>
+                                </div>
+                                <div class="cart-item-right">
+                                    <div class="line-total">RM ${item.line_total.toFixed(2)}</div>
+                                    <button class="remove-btn" onclick="removeItem('${item.product_id}')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="summary-panel">
+                        <h2><i class="fas fa-receipt"></i> Order Summary</h2>
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span class="value">RM ${subtotal.toFixed(2)}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax (6% SST)</span>
+                            <span class="value">RM ${tax.toFixed(2)}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span class="value">${shipping === 0 ? 'FREE' : 'RM ' + shipping.toFixed(2)}</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span class="value">RM ${total.toFixed(2)}</span>
+                        </div>
+                        <button class="checkout-btn" onclick="location.href='/checkout'">
+                            <i class="fas fa-lock"></i> Proceed to Checkout
+                        </button>
+                        <a href="/products" class="continue-link">← Continue Shopping</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function updateQty(productId, quantity) {
+            try {
+                const res = await fetch('/api/cart/update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ product_id: productId, quantity })
+                });
+                const data = await res.json();
+                if (data.success) loadCart();
+            } catch (e) { console.error(e); }
+        }
+
+        async function removeItem(productId) {
+            try {
+                const res = await fetch('/api/cart/remove', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ product_id: productId })
+                });
+                const data = await res.json();
+                if (data.success) loadCart();
+            } catch (e) { console.error(e); }
+        }
+
+        window.addEventListener('DOMContentLoaded', loadCart);
+    </script>
+</body>
+</html>

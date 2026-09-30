@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Sign In | OBD-FuelGuard - Fuel Subsidy Verification System</title>
+    
+    <meta name="description" content="Sign in to your OBD-FuelGuard account to access your dashboard, track fuel transactions, and manage your fleet subsidy verification.">
+    <meta name="keywords" content="OBD-FuelGuard login, sign in, account access, fuel subsidy dashboard">
+    <link rel="canonical" href="https://obd-fuelguard.com/auth">
+    <meta name="robots" content="index, follow">
+    
+    <meta property="og:title" content="Sign In | OBD-FuelGuard">
+    <meta property="og:description" content="Access your OBD-FuelGuard dashboard.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://obd-fuelguard.com/auth">
+    
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navi.css') }}"> 
+
+</head>
+<body>
+    {% include 'header.html' %}
+    <!-- ===== PAGE BACKGROUND WITH TRIGGER BUTTONS ===== -->
+    <div class="auth-page">
+        <div class="trigger-container">
+            <div class="brand-logo">SUS<span>.</span></div>
+            <h1>OBD-FuelGuard Account</h1>
+            <p>Access your dashboard to manage fuel subsidy verification, track transactions, and monitor your fleet in real-time.</p>
+            <div class="trigger-buttons">
+                <button class="btn" onclick="openModal('login')">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+                <button class="btn btn-outline" onclick="openModal('signup')">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== AUTH MODAL ===== -->
+    <div class="modal-overlay" id="authModal">
+        <div class="auth-modal">
+            <button class="modal-close" onclick="closeModal()" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <!-- ===== LOGIN SCREEN ===== -->
+            <div class="form-screen active" id="loginScreen">
+                <div class="modal-header">
+                    <div class="brand">SUS<span>.</span></div>
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to your OBD-FuelGuard account</p>
+                </div>
+                <div class="auth-form">
+                    <div class="alert alert-error" id="loginError">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span id="loginErrorText">Invalid email or password.</span>
+                    </div>
+
+                    <form id="loginForm" onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label for="loginEmail">Email Address</label>
+                            <input type="email" id="loginEmail" placeholder="you@company.com" required autocomplete="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password">
+                                <button type="button" class="toggle-password" onclick="togglePassword('loginPassword', this)">
+                                    <i class="far fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-options">
+                            <label>
+                                <input type="checkbox" id="rememberMe"> Remember me
+                            </label>
+                            <a href="#" onclick="switchScreen('forgot'); return false;">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="submit-btn" id="loginSubmitBtn">
+                            <i class="fas fa-sign-in-alt"></i> Sign In
+                        </button>
+                    </form>
+
+                    <div class="divider">or continue with</div>
+
+                    <div class="social-login">
+                        <button class="social-btn google" onclick="socialLogin('Google')">
+                            <i class="fab fa-google"></i> Google
+                        </button>
+                        <button class="social-btn microsoft" onclick="socialLogin('Microsoft')">
+                            <i class="fab fa-microsoft"></i> Microsoft
+                        </button>
+                    </div>
+
+                    <div class="modal-footer">
+                        Don't have an account? <a href="#" onclick="switchScreen('signup'); return false;">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== SIGNUP SCREEN ===== -->
+            <div class="form-screen" id="signupScreen">
+                <div class="modal-header">
+                    <div class="brand">SUS<span>.</span></div>
+                    <h2>Create Account</h2>
+                    <p>Join OBD-FuelGuard today</p>
+                </div>
+                <div class="auth-form">
+                    <button class="back-link" onclick="switchScreen('login')">
+                        <i class="fas fa-arrow-left"></i> Back to Login
+                    </button>
+
+                    <div class="alert alert-error" id="signupError">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span id="signupErrorText">Error message here.</span>
+                    </div>
+
+                    <form id="signupForm" onsubmit="handleSignup(event)">
+                        <div class="form-group">
+                            <label for="signupName">Full Name</label>
+                            <input type="text" id="signupName" placeholder="Ahmad bin Ismail" required autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="signupEmail">Work Email</label>
+                            <input type="email" id="signupEmail" placeholder="you@company.com" required autocomplete="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="signupPhone">Phone Number</label>
+                            <input type="tel" id="signupPhone" placeholder="+60 12-345 6789" required autocomplete="tel">
+                        </div>
+
+                        <!-- ===== AGE ===== -->
+                        <div class="form-group">
+                            <label for="signupAge">Age</label>
+                            <input type="number" id="signupAge" placeholder="18" min="18" max="120" required>
+                        </div>
+
+                        <!-- ===== COUNTRY & STATE ===== -->
+                        <div class="form-row">
+                            <div class="form-group" style="margin-bottom: 18px;">
+                                <label for="signupCountry">Country</label>
+                                <select id="signupCountry" required onchange="updateStates()">
+                                    <option value="">Select country</option>
+                                    <option value="Malaysia" selected>Malaysia</option>
+                                    <option value="Singapore">Singapore</option>
+                                    <option value="Indonesia">Indonesia</option>
+                                    <option value="Thailand">Thailand</option>
+                                    <option value="Brunei">Brunei</option>
+                                    <option value="Philippines">Philippines</option>
+                                    <option value="Vietnam">Vietnam</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 18px;">
+                                <label for="signupState">State</label>
+                                <select id="signupState" required>
+                                    <option value="">Select state</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="signupPassword" placeholder="Create a strong password" required autocomplete="new-password" oninput="checkPasswordStrength()">
+                                <button type="button" class="toggle-password" onclick="togglePassword('signupPassword', this)">
+                                    <i class="far fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="password-strength" id="passwordStrength">
+                                <div class="strength-bar">
+                                    <div class="strength-fill" id="strengthFill"></div>
+                                </div>
+                                <div class="strength-text" id="strengthText"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupConfirm">Confirm Password</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="signupConfirm" placeholder="Re-enter your password" required autocomplete="new-password">
+                                <button type="button" class="toggle-password" onclick="togglePassword('signupConfirm', this)">
+                                    <i class="far fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-options">
+                            <label>
+                                <input type="checkbox" id="agreeTerms" required> I agree to the <a href="terms.html" style="color: var(--accent-red);">Terms</a> & <a href="privacy.html" style="color: var(--accent-red);">Privacy Policy</a>
+                            </label>
+                        </div>
+                        <button type="submit" class="submit-btn" id="signupSubmitBtn">
+                            <i class="fas fa-user-plus"></i> Create Account
+                        </button>
+                    </form>
+
+                    <div class="modal-footer">
+                        Already have an account? <a href="#" onclick="switchScreen('login'); return false;">Sign In</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== FORGOT PASSWORD SCREEN ===== -->
+            <div class="form-screen" id="forgotScreen">
+                <div class="modal-header">
+                    <div class="brand">SUS<span>.</span></div>
+                    <h2>Reset Password</h2>
+                    <p>We'll help you get back in</p>
+                </div>
+                <div class="auth-form">
+                    <button class="back-link" onclick="switchScreen('login')">
+                        <i class="fas fa-arrow-left"></i> Back to Login
+                    </button>
+
+                    <div class="alert alert-info" id="forgotInfo">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Enter your registered email and we'll show you how to reset your password.</span>
+                    </div>
+
+                    <div class="alert alert-error" id="forgotError">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span id="forgotErrorText">Error message here.</span>
+                    </div>
+
+                    <form id="forgotForm" onsubmit="handleForgot(event)">
+                        <div class="form-group">
+                            <label for="forgotEmail">Registered Email</label>
+                            <input type="email" id="forgotEmail" placeholder="you@company.com" required autocomplete="email">
+                        </div>
+                        <button type="submit" class="submit-btn" id="forgotSubmitBtn">
+                            <i class="fas fa-paper-plane"></i> Continue
+                        </button>
+                    </form>
+
+                    <div class="modal-footer">
+                        Remember your password? <a href="#" onclick="switchScreen('login'); return false;">Sign In</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== SUCCESS SCREEN (shared) ===== -->
+            <div class="form-screen" id="successScreen">
+                <div class="auth-form">
+                    <div class="success-screen">
+                        <div class="success-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <h3 id="successTitle">Success!</h3>
+                        <p id="successMessage">You'll be redirected shortly.</p>
+                        <button class="btn" onclick="closeModal()" style="width: 100%;">
+                            <i class="fas fa-arrow-left"></i> Back to Home
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // COUNTRY → STATE MAPPING
+        // ============================================================
+        const statesByCountry = {
+            "Malaysia": [
+                "Johor", "Kedah", "Kelantan", "Melaka", "Negeri Sembilan",
+                "Pahang", "Perak", "Perlis", "Penang", "Sabah", "Sarawak",
+                "Selangor", "Terengganu",
+                "Kuala Lumpur", "Labuan", "Putrajaya"
+            ],
+            "Singapore": ["Central", "East", "North", "North-East", "West"],
+            "Indonesia": [
+                "Jakarta", "West Java", "Central Java", "East Java",
+                "Bali", "Sumatra", "Kalimantan", "Sulawesi", "Papua"
+            ],
+            "Thailand": [
+                "Bangkok", "Chiang Mai", "Phuket", "Pattaya",
+                "Khon Kaen", "Hat Yai", "Other"
+            ],
+            "Brunei": ["Brunei-Muara", "Belait", "Tutong", "Temburong"],
+            "Philippines": [
+                "Metro Manila", "Cebu", "Davao", "Baguio",
+                "Iloilo", "Other"
+            ],
+            "Vietnam": [
+                "Hanoi", "Ho Chi Minh City", "Da Nang", "Hai Phong", "Other"
+            ],
+            "Other": ["Other"]
+        };
+
+        function updateStates() {
+            const country = document.getElementById('signupCountry').value;
+            const stateSelect = document.getElementById('signupState');
+            const states = statesByCountry[country] || [];
+
+            stateSelect.innerHTML = '<option value="">Select state</option>';
+
+            states.forEach(state => {
+                const opt = document.createElement('option');
+                opt.value = state;
+                opt.textContent = state;
+                stateSelect.appendChild(opt);
+            });
+        }
+
+        // ============================================================
+        // MODAL CONTROL
+        // ============================================================
+        function openModal(screen = 'login') {
+            document.getElementById('authModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            switchScreen(screen);
+            
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'open_auth_modal', {
+                    'event_category': 'engagement',
+                    'event_label': screen
+                });
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('authModal').classList.remove('active');
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                switchScreen('login');
+                hideAllAlerts();
+            }, 300);
+        }
+
+        function switchScreen(screen) {
+            document.querySelectorAll('.form-screen').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(screen + 'Screen');
+            if (target) target.classList.add('active');
+            hideAllAlerts();
+        }
+
+        document.getElementById('authModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // ============================================================
+        // PASSWORD VISIBILITY TOGGLE
+        // ============================================================
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('far', 'fa-eye');
+                icon.classList.add('far', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('far', 'fa-eye-slash');
+                icon.classList.add('far', 'fa-eye');
+            }
+        }
+
+        // ============================================================
+        // PASSWORD STRENGTH
+        // ============================================================
+        function checkPasswordStrength() {
+            const password = document.getElementById('signupPassword').value;
+            const strengthEl = document.getElementById('passwordStrength');
+            const fillEl = document.getElementById('strengthFill');
+            const textEl = document.getElementById('strengthText');
+
+            if (password.length === 0) {
+                strengthEl.classList.remove('visible');
+                return;
+            }
+            strengthEl.classList.add('visible');
+
+            let score = 0;
+            if (password.length >= 8) score++;
+            if (password.length >= 12) score++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score++;
+            if (/\d/.test(password)) score++;
+            if (/[^a-zA-Z\d]/.test(password)) score++;
+
+            const levels = [
+                { width: '20%', color: '#E30613', text: 'Very Weak' },
+                { width: '40%', color: '#FF6B35', text: 'Weak' },
+                { width: '60%', color: '#FFB400', text: 'Fair' },
+                { width: '80%', color: '#8BC34A', text: 'Good' },
+                { width: '100%', color: '#25D366', text: 'Strong' }
+            ];
+
+            const level = levels[Math.min(score, 4)];
+            fillEl.style.width = level.width;
+            fillEl.style.background = level.color;
+            textEl.textContent = level.text;
+            textEl.style.color = level.color;
+        }
+
+        // ============================================================
+        // ALERT HELPERS
+        // ============================================================
+        function hideAllAlerts() {
+            document.querySelectorAll('.alert').forEach(a => a.classList.remove('show'));
+        }
+
+        function showAlert(id, textId, message) {
+            if (textId && message) document.getElementById(textId).textContent = message;
+            document.getElementById(id).classList.add('show');
+        }
+
+        // ============================================================
+        // LOGIN HANDLER — calls /api/login (no verification checks)
+        // ============================================================
+        async function handleLogin(e) {
+            e.preventDefault();
+            hideAllAlerts();
+
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const remember = document.getElementById('rememberMe').checked;
+            const btn = document.getElementById('loginSubmitBtn');
+
+            if (!email || !password) {
+                showAlert('loginError', 'loginErrorText', 'Please fill in all fields.');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ email, password, remember })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'login_success', { 'event_category': 'lead', 'value': 5 });
+                    }
+                    showScreen('success', 'Welcome Back!', 'Redirecting to your dashboard...');
+                    setTimeout(() => { window.location.href = '/dashboard'; }, 1500);
+                } else {
+                    showAlert('loginError', 'loginErrorText', data.error || 'Invalid email or password.');
+                }
+            } catch (err) {
+                console.error('Login error:', err);
+                showAlert('loginError', 'loginErrorText', 'Network error. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+            }
+        }
+
+        // ============================================================
+        // SIGNUP HANDLER — calls /api/signup (no OTP, direct to login)
+        // ============================================================
+        async function handleSignup(e) {
+            e.preventDefault();
+            hideAllAlerts();
+
+            const payload = {
+                name: document.getElementById('signupName').value.trim(),
+                email: document.getElementById('signupEmail').value.trim(),
+                phone: document.getElementById('signupPhone').value.trim(),
+                age: document.getElementById('signupAge').value,
+                country: document.getElementById('signupCountry').value,
+                state: document.getElementById('signupState').value,
+                password: document.getElementById('signupPassword').value,
+                confirm: document.getElementById('signupConfirm').value
+            };
+
+            const agree = document.getElementById('agreeTerms').checked;
+            const btn = document.getElementById('signupSubmitBtn');
+
+            // Client-side validation
+            if (!payload.name || !payload.email || !payload.phone || !payload.age || !payload.country || !payload.state || !payload.password || !payload.confirm) {
+                showAlert('signupError', 'signupErrorText', 'Please fill in all fields.');
+                return;
+            }
+            const ageNum = parseInt(payload.age, 10);
+            if (isNaN(ageNum) || ageNum < 18 || ageNum > 120) {
+                showAlert('signupError', 'signupErrorText', 'Age must be between 18 and 120.');
+                return;
+            }
+            if (payload.password.length < 8) {
+                showAlert('signupError', 'signupErrorText', 'Password must be at least 8 characters long.');
+                return;
+            }
+            if (payload.password !== payload.confirm) {
+                showAlert('signupError', 'signupErrorText', 'Passwords do not match.');
+                return;
+            }
+            if (!agree) {
+                showAlert('signupError', 'signupErrorText', 'You must agree to the Terms & Privacy Policy.');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+
+            try {
+                const res = await fetch('/api/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'signup_success', { 'event_category': 'lead', 'value': 10 });
+                    }
+                    // No OTP — show success and auto-switch to login
+                    showScreen('success', 'Account Created!',
+                        'Your account is ready. Please log in with your credentials.');
+                    setTimeout(() => {
+                        switchScreen('login');
+                        document.getElementById('loginEmail').value = payload.email;
+                        document.getElementById('loginPassword').focus();
+                    }, 2200);
+                } else {
+                    showAlert('signupError', 'signupErrorText', data.error || 'Signup failed.');
+                }
+            } catch (err) {
+                console.error('Signup error:', err);
+                showAlert('signupError', 'signupErrorText', 'Network error. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+            }
+        }
+
+        // ============================================================
+        // FORGOT PASSWORD — calls /api/forgot-password (support stub)
+        // ============================================================
+        async function handleForgot(e) {
+            e.preventDefault();
+            hideAllAlerts();
+
+            const email = document.getElementById('forgotEmail').value.trim();
+            const btn = document.getElementById('forgotSubmitBtn');
+
+            if (!email) {
+                showAlert('forgotError', 'forgotErrorText', 'Please enter your email address.');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+
+            try {
+                const res = await fetch('/api/forgot-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                const data = await res.json();
+
+                showScreen('success', 'Check Your Email',
+                    data.message || 'If an account exists with that email, please contact support to reset your password.');
+
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'password_reset_request', {
+                        'event_category': 'engagement',
+                        'event_label': 'Password Reset Request'
+                    });
+                }
+            } catch (err) {
+                console.error('Forgot error:', err);
+                showAlert('forgotError', 'forgotErrorText', 'Network error. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Continue';
+            }
+        }
+
+        // ============================================================
+        // SUCCESS SCREEN
+        // ============================================================
+        function showScreen(type, title, message) {
+            document.querySelectorAll('.form-screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('successTitle').textContent = title;
+            document.getElementById('successMessage').textContent = message;
+            document.getElementById('successScreen').classList.add('active');
+        }
+
+        // ============================================================
+        // SOCIAL LOGIN (placeholder)
+        // ============================================================
+        function socialLogin(provider) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'social_login_click', {
+                    'event_category': 'engagement',
+                    'event_label': provider
+                });
+            }
+            alert(provider + ' login would open here.\\n\\nIn production, this would redirect to ' + provider + ' OAuth.');
+        }
+
+        // ============================================================
+        // AUTO-OPEN MODAL FROM URL PARAMS
+        // ============================================================
+        window.addEventListener('DOMContentLoaded', function() {
+            updateStates();
+
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('login')) openModal('login');
+            if (params.has('signup')) openModal('signup');
+            if (params.has('forgot')) openModal('forgot');
+        });
+    </script>
+</body>
+</html>

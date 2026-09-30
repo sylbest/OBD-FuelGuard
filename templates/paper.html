@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- ===== SEO: TITLE ===== -->
+    <title>Technical Papers | OBD-FuelGuard Research & Whitepapers</title>
+    
+    <!-- ===== SEO: META DESCRIPTION ===== -->
+    <meta name="description" content="Access OBD-FuelGuard technical papers, whitepapers, case studies, and research on OBD-RFID fuel subsidy verification technology. Free downloads for government, petrol stations, and fleet operators.">
+    
+    <!-- ===== SEO: KEYWORDS ===== -->
+    <meta name="keywords" content="OBD-RFID technical papers, fuel subsidy verification research, whitepapers Malaysia, OBD-FuelGuard case studies, subsidy leakage prevention research, BUDI MADANI technical documentation">
+    
+    <!-- ===== SEO: CANONICAL ===== -->
+    <link rel="canonical" href="https://obd-fuelguard.com/solution.html">
+    
+    <!-- ===== SEO: ROBOTS ===== -->
+    <meta name="robots" content="index, follow">
+    
+    <!-- ===== SEO: OPEN GRAPH ===== -->
+    <meta property="og:title" content="Technical Papers | OBD-FuelGuard Research & Whitepapers">
+    <meta property="og:description" content="Access technical papers, whitepapers, and case studies on OBD-RFID fuel subsidy verification technology.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://obd-fuelguard.com/solution.html">
+    <meta property="og:image" content="https://obd-fuelguard.com/images/og-papers.jpg">
+    <meta property="og:site_name" content="OBD-FuelGuard">
+    
+    <!-- ===== SEO: TWITTER CARD ===== -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Technical Papers | OBD-FuelGuard">
+    <meta name="twitter:description" content="Access technical papers, whitepapers, and case studies on OBD-RFID fuel subsidy verification technology.">
+    
+    <!-- ===== FAVICON ===== -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    
+    <!-- ===== SCHEMA: CollectionPage ===== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "OBD-FuelGuard Technical Papers",
+      "url": "https://obd-fuelguard.com/solution.html",
+      "description": "A collection of technical papers, whitepapers, case studies, and research on OBD-RFID fuel subsidy verification technology.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "SUS Company",
+        "logo": "https://obd-fuelguard.com/images/logo.png"
+      }
+    }
+    </script>
+    
+    <!-- ===== SCHEMA: Breadcrumb ===== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://obd-fuelguard.com/"},
+        {"@type": "ListItem", "position": 2, "name": "Technical Papers", "item": "https://obd-fuelguard.com/solution.html"}
+      ]
+    }
+    </script>
+    
+    <!-- ===== GOOGLE ANALYTICS ===== -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary-black: #111;
+            --primary-white: #fff;
+            --accent-red: #E30613;
+            --gray-text: #888;
+            --dark-bg: #1a1a1a;
+            --accent-green: #25D366;
+            --accent-blue: #0066CC;
+        }
+
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            scroll-behavior: smooth;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        /* ===== PROMO BANNER ===== */
+        .promo-banner {
+            background: linear-gradient(90deg, #E30613 0%, #B00510 100%);
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            position: relative;
+            z-index: 1001;
+        }
+        .promo-banner strong { font-weight: 900; }
+        .promo-banner .countdown {
+            background: rgba(0,0,0,0.3);
+            padding: 3px 10px;
+            border-radius: 3px;
+            margin-left: 10px;
+            font-weight: 700;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 40px;
+            height: 70px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-left, .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .logo {
+            font-weight: 900;
+            font-size: 24px;
+            letter-spacing: -1px;
+            color: #000;
+        }
+
+        .logo span {
+            color: var(--accent-red);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-red);
+        }
+
+        nav a.active {
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+
+        .nav-icons i {
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-icons i:hover {
+            color: var(--accent-red);
+        }
+
+        .btn {
+            background-color: var(--accent-red);
+            color: white;
+            padding: 12px 28px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #000;
+            color: white;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-outline:hover {
+            background-color: white;
+            color: black;
+        }
+
+        /* Page Header */
+        .page-header {
+            position: relative;
+            height: 45vh;
+            background: url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+        }
+
+        .page-header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        .page-header-content h1 {
+            font-size: 52px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .page-header-content h1 span {
+            color: var(--accent-red);
+        }
+
+        .page-header-content p {
+            font-size: 18px;
+            color: #ddd;
+            line-height: 1.8;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .breadcrumb a {
+            color: var(--accent-red);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-dark {
+            background-color: #000;
+            color: white;
+        }
+
+        .section-light {
+            background-color: #fff;
+            color: #333;
+        }
+
+        .section-gray {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .section-title span {
+            color: var(--accent-red);
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: #888;
+            margin-bottom: 40px;
+            max-width: 700px;
+        }
+
+        .section-subtitle-light {
+            color: #aaa;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-center .section-subtitle {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== STATS BAR ===== */
+        .stats-bar {
+            background: #111;
+            color: white;
+            padding: 40px 80px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+        .stats-bar .stat-number {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--accent-red);
+        }
+        .stats-bar .stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #aaa;
+            margin-top: 5px;
+        }
+
+        /* ===== PAPER TYPES FILTER ===== */
+        .paper-types {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        .paper-type-btn {
+            padding: 10px 24px;
+            border: 2px solid #ddd;
+            background: white;
+            color: #333;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+        .paper-type-btn:hover {
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+        .paper-type-btn.active {
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+            color: white;
+        }
+
+        /* ===== PAPERS GRID ===== */
+        .papers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .paper-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            border-top: 4px solid transparent;
+        }
+
+        .paper-card:hover {
+            border-top-color: var(--accent-red);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+        }
+
+        .paper-card-header {
+            background: linear-gradient(135deg, #111 0%, #333 100%);
+            color: white;
+            padding: 30px 25px;
+            position: relative;
+        }
+
+        .paper-card-header .paper-type {
+            display: inline-block;
+            background: var(--accent-red);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            border-radius: 3px;
+            margin-bottom: 12px;
+        }
+
+        .paper-card-header .paper-icon {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 32px;
+            color: rgba(255,255,255,0.15);
+        }
+
+        .paper-card-header h3 {
+            font-size: 18px;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .paper-card-header .paper-date {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .paper-card-body {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .paper-card-body p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .paper-card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .paper-card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .paper-card-meta i {
+            color: var(--accent-red);
+        }
+
+        .paper-download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--accent-red);
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .paper-download-btn:hover {
+            background: #000;
+        }
+
+        /* ===== FEATURED PAPER ===== */
+        .featured-paper {
+            background: #111;
+            color: white;
+            padding: 60px;
+            border-radius: 12px;
+            margin-bottom: 60px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            align-items: center;
+            border-left: 5px solid var(--accent-red);
+        }
+        .featured-paper .featured-label {
+            display: inline-block;
+            background: var(--accent-red);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 5px 12px;
+            border-radius: 3px;
+            margin-bottom: 15px;
+        }
+        .featured-paper h3 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            line-height: 1.3;
+            text-transform: uppercase;
+        }
+        .featured-paper p {
+            font-size: 15px;
+            color: #ccc;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .featured-paper .btn {
+            margin-right: 10px;
+        }
+        .featured-paper-visual {
+            text-align: center;
+        }
+        .featured-paper-visual i {
+            font-size: 100px;
+            color: var(--accent-red);
+            opacity: 0.8;
+        }
+
+        /* ===== CITATION BLOCK ===== */
+        .citation-section {
+            background: #f9f9f9;
+            padding: 80px;
+            text-align: center;
+        }
+        .citation-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .citation-block {
+            background: white;
+            border-left: 4px solid var(--accent-red);
+            padding: 30px;
+            text-align: left;
+            margin-top: 30px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .citation-block code {
+            display: block;
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            overflow-x: auto;
+        }
+        .citation-block .copy-btn {
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .citation-block .copy-btn:hover {
+            background: #000;
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            background: linear-gradient(135deg, #111 0%, #333 100%);
+            color: white;
+            padding: 80px 40px;
+            text-align: center;
+        }
+        .cta-section h2 {
+            font-size: 36px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        .cta-section h2 span {
+            color: var(--accent-red);
+        }
+        .cta-section p {
+            font-size: 18px;
+            color: #ccc;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== FLOATING WHATSAPP ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-green);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 999;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        /* ===== COOKIE BANNER ===== */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #111;
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1002;
+            font-size: 13px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .cookie-banner a {
+            color: var(--accent-red);
+        }
+        .cookie-banner button {
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        footer {
+            background: #111;
+            color: #888;
+            padding: 60px 80px;
+            font-size: 14px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-col ul li a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+        }
+
+        .social-icons i {
+            font-size: 20px;
+            margin-right: 15px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .social-icons i:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-bottom-left {
+            display: flex;
+            gap: 20px;
+        }
+        .footer-bottom-left a {
+            color: #888;
+            text-decoration: none;
+        }
+        .footer-bottom-left a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .papers-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .section,
+            .citation-section {
+                padding: 60px 40px;
+            }
+            .featured-paper {
+                padding: 40px;
+                grid-template-columns: 1fr;
+            }
+            .stats-bar {
+                padding: 40px;
+                grid-template-columns: repeat(2, 1fr);
+            }
+            footer {
+                padding: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 20px;
+            }
+            .nav-left a {
+                display: none;
+            }
+            .page-header-content h1 {
+                font-size: 32px;
+            }
+            .papers-grid {
+                grid-template-columns: 1fr;
+            }
+            .section,
+            .citation-section {
+                padding: 40px 20px;
+            }
+            .stats-bar {
+                padding: 40px 20px;
+                grid-template-columns: 1fr 1fr;
+            }
+            .featured-paper {
+                padding: 30px 20px;
+            }
+            footer {
+                padding: 40px 20px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            .cookie-banner {
+                padding: 15px 20px;
+                flex-direction: column;
+                text-align: center;
+            }
+            .promo-banner {
+                font-size: 12px;
+                padding: 8px 15px;
+            }
+            .promo-banner .countdown {
+                display: block;
+                margin-left: 0;
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== PROMO BANNER ===== -->
+    <div class="promo-banner">
+        🎉 <strong>LIMITED OFFER:</strong> Get <strong>50% OFF</strong> subscription fee for first-month adopters.
+        <span class="countdown" id="countdown">Loading...</span>
+    </div>
+
+    <!-- Navigation (unchanged — fetched from header.html) -->
+    <nav id="header-container"></nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="page-header-content">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> &gt; Technical Papers
+            </div>
+            <h1>Technical <span>Papers</span></h1>
+            <p>Research, whitepapers, case studies, and technical documentation on OBD-RFID fuel subsidy verification technology.</p>
+        </div>
+    </section>
+
+    <!-- ===== STATS BAR ===== -->
+    <section class="stats-bar">
+        <div>
+            <div class="stat-number">24+</div>
+            <div class="stat-label">Technical Papers</div>
+        </div>
+        <div>
+            <div class="stat-number">8</div>
+            <div class="stat-label">Case Studies</div>
+        </div>
+        <div>
+            <div class="stat-number">12K+</div>
+            <div class="stat-label">Downloads</div>
+        </div>
+        <div>
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Free Access</div>
+        </div>
+    </section>
+
+    <!-- ===== PAPERS LIBRARY ===== -->
+    <section class="section section-light">
+        <div class="text-center">
+            <h2 class="section-title">Research <span>Library</span></h2>
+            <p class="section-subtitle" style="margin-left: auto; margin-right: auto;">Browse our collection of technical papers, whitepapers, and case studies. All downloads are free.</p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="paper-types">
+            <button class="paper-type-btn active" data-filter="all">All Papers</button>
+            <button class="paper-type-btn" data-filter="whitepaper">Whitepapers</button>
+            <button class="paper-type-btn" data-filter="case-study">Case Studies</button>
+            <button class="paper-type-btn" data-filter="technical">Technical Papers</button>
+            <button class="paper-type-btn" data-filter="research">Research Reports</button>
+        </div>
+
+        <!-- Featured Paper -->
+        <div class="featured-paper">
+            <div>
+                <span class="featured-label">⭐ Featured Paper</span>
+                <h3>Eliminating Fuel Subsidy Leakage: A Vehicle-Level Verification Framework for Malaysia</h3>
+                <p>This comprehensive whitepaper presents the technical architecture, security model, and economic impact analysis of OBD-RFID fuel subsidy verification. It includes real-world data from pilot deployments across 50+ petrol stations in Peninsular Malaysia.</p>
+                <a href="papers/obd-fuelguard-whitepaper.pdf" class="btn" download>Download PDF</a>
+                <a href="#" class="btn btn-outline">Read Abstract</a>
+            </div>
+            <div class="featured-paper-visual">
+                <i class="fas fa-file-pdf"></i>
+            </div>
+        </div>
+
+        <!-- Papers Grid -->
+        <div class="papers-grid" id="papersGrid">
+
+            <!-- Paper 1 -->
+            <div class="paper-card" data-type="whitepaper">
+                <div class="paper-card-header">
+                    <span class="paper-type">Whitepaper</span>
+                    <i class="fas fa-file-alt paper-icon"></i>
+                    <h3>OBD-RFID Integration: Technical Architecture & Security Model</h3>
+                    <div class="paper-date"><i class="far fa-calendar"></i> September 2026</div>
+                </div>
+                <div class="paper-card-body">
+                    <p>Detailed technical breakdown of the OBD-RFID hardware stack, encryption protocols, tamper-detection mechanisms, and secure communication channels between vehicle, station, and central database.</p>
+                    <div class="paper-card-meta">
+                        <span><i class="fas fa-file-pdf"></i> 42 pages</span>
+                        <span><i class="fas fa-download"></i> 3,200 downloads</span>
+                    </div>
+                    <a href="papers/obd-rfid-architecture.pdf" class="paper-download-btn" download>
+                        <i class="fas fa-download"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+
+            <!-- Paper 2 -->
+            <div class="paper-card" data-type="case-study">
+                <div class="paper-card-header">
+                    <span class="paper-type">Case Study</span>
+                    <i class="fas fa-chart-line paper-icon"></i>
+                    <h3>Case Study: 50 Petrol Stations, 6 Months, RM 12M Savings</h3>
+                    <div class="paper-date"><i class="far fa-calendar"></i> August 2026</div>
+                </div>
+                <div class="paper-card-body">
+                    <p>Real-world deployment results from a partnership with a major petrol station chain. Includes before/after data on subsidy leakage, transaction speed, and operational costs.</p>
+                    <div class="paper-card-meta">
+                        <span><i class="fas fa-file-pdf"></i> 28 pages</span>
+                        <span><i class="fas fa-download"></i> 2,100 downloads</span>
+                    </div>
+                    <a href="papers/case-study-50-stations.pdf" class="paper-download-btn" download>
+                        <i class="fas fa-download"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+
+            <!-- Paper 3 -->
+            <div class="paper-card" data-type="technical">
+                <div class="paper-card-header">
+                    <span class="paper-type">Technical Paper</span>
+                    <i class="fas fa-microchip paper-icon"></i>
+                    <h3>Real-Time VIN Verification: Latency, Accuracy & Edge Computing</h3>
+                    <div class="paper-date"><i class="far fa-calendar"></i> July 2026</div>
+                </div>
+                <div class="paper-card-body">
+                    <p>Technical analysis of sub-3-second VIN verification using edge computing. Covers network architecture, failover strategies, and 99.9% uptime design patterns.</p>
+                    <div class="paper-card-meta">
+                        <span><i class="fas fa-file-pdf"></i> 36 pages</span>
+                        <span><i class="fas fa-download"></i> 1,850 downloads</span>
+                    </div>
+                    <a href="papers/vin-verification-latency.pdf" class="paper-download-btn" download>
+                        <i class="fas fa-download"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+
+            <!-- Paper 4 -->
+            <div class="paper-card" data-type="research">
+                <div class="paper-card-header">
+                    <span class="paper-type">Research Report</span>
+                    <i class="fas fa-search-dollar paper-icon"></i>
+                    <h3>Economic Impact of Fuel Subsidy Leakage in Malaysia (2020–2026)</h3>
+                    <div class="paper-date"><i class="far fa-calendar"></i> June 2026</div>
+                </div>
+                <div class="paper-card-body">
+                    <p>Quantitative research on the scale of subsidy leakage, its economic cost to the nation, and the projected ROI of vehicle-level verification systems.</p>
+                    <div class="paper-card-meta">
+                        <span><i class="fas fa-file-pdf"></i> 54 pages</span>
+                        <span><i class="fas fa-download"></i> 4,500 downloads</span>
+                    </div>
+                    <a href="papers/economic-impact-research.pdf" class="paper-download-btn" download>
+                        <i class="fas fa-download"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+
+            <!-- Paper 5 -->
+            <div class="paper-card" data-type="technical">
+                <div class="paper-card-header">
+                    <span class="paper-type">Technical Paper</span>
+                    <i class="fas fa-shield-alt paper-icon"></i>
+                    <h3>Tamper-Proof Hardware Design: Anti-Fraud Mechanisms</h3>
+                    <div class="paper-date"><i class="far fa-calendar"></i> May 2026</div>
+                </div>
+                <div class="paper-card-body">
+                    <p>Engineering deep-dive into the anti-tamper design of the OBD device: physical sensors, cryptographic signatures, and remote attestation protocols.</p>
+                    <div class="paper-card-meta">
+                        <span><i class="fas fa-file-pdf"></i> 30 pages</span>
+                        <span><i class="fas fa-download"></i> 1,400 downloads</span>
+                    </div>
+                    <a href="papers/tamper-proof-hardware.pdf" class="paper-download-btn" download>
+                        <i class="fas fa-download"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+
+            <!-- Paper 6 -->
+            <div class="paper-card" data-type="case-study">
+                <div class="paper-card-header">
+                    <span class="paper-type">Case Study</span>
+                    <i class="fas fa-truck paper-icon"></i>
+                    <h3>Fleet Operator Case Study: 23% Reduction in Fuel Costs</h3>
+                    <div class="paper-date"><i class="far fa-calendar"></i> April 2026</div>
+                </div>
+                <div class="paper-card-body">
+                    <p>How a national logistics fleet reduced fuel costs by 23% in one quarter using OBD-FuelGuard's real-time analytics and driver behavior insights.</p>
+                    <div class="paper-card-meta">
+                        <span><i class="fas fa-file-pdf"></i> 24 pages</span>
+                        <span><i class="fas fa-download"></i> 1,900 downloads</span>
+                    </div>
+                    <a href="papers/fleet-operator-case-study.pdf" class="paper-download-btn" download>
+                        <i class="fas fa-download"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+
+            <!-- Paper 7 -->
+            <div class="paper-card" data-type="whitepaper">
+                <div class="paper-card-header">
+                    <span class="paper-type">Whitepaper</span>
+                    <i class="fas fa-balance-scale paper-icon"></i>
+                    <h3>BUDI MADANI Compliance: Regulatory Alignment Guide</h3>
+                    <div class="paper-date"><i class="far fa-calendar"></i> March 2026</div>
+                </div>
+                <div class="paper-card-body">
+                    <p>A compliance-focused whitepaper mapping OBD-FuelGuard's architecture to the BUDI MADANI framework, PDPA requirements, and government audit standards.</p>
+                    <div class="paper-card-meta">
+                        <span><i class="fas fa-file-pdf"></i> 38 pages</span>
+                        <span><i class="fas fa-download"></i> 2,600 downloads</span>
+                    </div>
+                    <a href="papers/budi-madani-compliance.pdf" class="paper-download-btn" download>
+                        <i class="fas fa-download"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+
+            <!-- Paper 8 -->
+            <div class="paper-card" data-type="research">
+                <div class="paper-card-header">
+                    <span class="paper-type">Research Report</span>
+                    <i class="fas fa-leaf paper-icon"></i>
+                    <h3>ESG & Sustainability Impact of Fuel Subsidy Verification</h3>
+                    <div class="paper-date"><i class="far fa-calendar"></i> February 2026</div>
+                </div>
+                <div class="paper-card-body">
+                    <p>Research report on how vehicle-level verification supports Malaysia's ESG goals, reduces waste, and contributes to national sustainability targets.</p>
+                    <div class="paper-card-meta">
+                        <span><i class="fas fa-file-pdf"></i> 44 pages</span>
+                        <span><i class="fas fa-download"></i> 1,700 downloads</span>
+                    </div>
+                    <a href="papers/esg-sustainability-report.pdf" class="paper-download-btn" download>
+                        <i class="fas fa-download"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+
+            <!-- Paper 9 -->
+            <div class="paper-card" data-type="technical">
+                <div class="paper-card-header">
+                    <span class="paper-type">Technical Paper</span>
+                    <i class="fas fa-database paper-icon"></i>
+                    <h3>Data Architecture: Scalable Backend for 3,500+ Petrol Stations</h3>
+                    <div class="paper-date"><i class="far fa-calendar"></i> January 2026</div>
+                </div>
+                <div class="paper-card-body">
+                    <p>System design paper covering the distributed backend architecture, database sharding, message queues, and analytics pipeline supporting nationwide deployment.</p>
+                    <div class="paper-card-meta">
+                        <span><i class="fas fa-file-pdf"></i> 48 pages</span>
+                        <span><i class="fas fa-download"></i> 2,300 downloads</span>
+                    </div>
+                    <a href="papers/data-architecture.pdf" class="paper-download-btn" download>
+                        <i class="fas fa-download"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== CITATION SECTION ===== -->
+    <section class="citation-section">
+        <div class="citation-container">
+            <h2 class="section-title">Cite Our <span>Work</span></h2>
+            <p style="color: #888; font-size: 16px; line-height: 1.7;">If you are referencing our technical papers in academic work, government reports, or industry publications, please use the following citation format.</p>
+            <div class="citation-block">
+                <code id="citationText">SUS Company. (2026). Eliminating Fuel Subsidy Leakage: A Vehicle-Level Verification Framework for Malaysia. OBD-FuelGuard Technical Papers, Vol. 1. Retrieved from https://obd-fuelguard.com/papers/obd-fuelguard-whitepaper.pdf</code>
+                <button class="copy-btn" onclick="copyCitation()">
+                    <i class="fas fa-copy"></i> Copy Citation
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA SECTION ===== -->
+    <section class="cta-section">
+        <h2>Want to See It <span>in Action?</span></h2>
+        <p>Request a free demo and see how OBD-FuelGuard can eliminate subsidy leakage for your organization.</p>
+        <a href="index.html#request-demo" class="btn">Request a Demo</a>
+        <a href="contact.html" class="btn btn-outline">Contact Research Team</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Corporate</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="solution.html">Our Solution</a></li>
+                    <li><a href="government.html">Government Partnership</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Talk To Us</h4>
+                <ul>
+                    <li>English / BM / 中文</li>
+                    <li><a href="contact.html">Customer Support</a></li>
+                    <li>1-800-888-838</li>
+                    <li>info@suscompany.com</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="whitepaper.pdf" download>Whitepaper</a></li>
+                    <li><a href="case-studies.html">Case Studies</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="solution.html">Technical Papers</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="https://facebook.com/obdfuelguard" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/obdfuelguard" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/obdfuelguard" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com/company/obdfuelguard" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://youtube.com/@obdfuelguard" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-left">
+                <a href="terms.html">Terms &amp; Conditions</a>
+                <a href="privacy.html">Privacy Notice</a>
+                <a href="cookies.html">Cookie Policy</a>
+            </div>
+            <span>&copy; 2026 SUS Company. All Rights Reserved.</span>
+        </div>
+    </footer>
+
+    <!-- ===== FLOATING WHATSAPP ===== -->
+    <a href="https://wa.me/60123456789?text=Hi%2C%20I%27m%20interested%20in%20OBD-FuelGuard" 
+       class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ===== COOKIE BANNER ===== -->
+    <div class="cookie-banner" id="cookieBanner">
+        <span>We use cookies to enhance your experience. By continuing, you agree to our <a href="cookies.html">Cookie Policy</a> and <a href="privacy.html">Privacy Notice</a>.</span>
+        <button onclick="acceptCookies()">Accept</button>
+    </div>
+
+    <!-- Header Fetch (unchanged) -->
+    <script>
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-container').innerHTML = data;
+        })
+        .catch(error => console.log('Error loading header:', error));
+
+    // ===== COOKIE BANNER =====
+    function acceptCookies() {
+        document.getElementById('cookieBanner').style.display = 'none';
+        localStorage.setItem('cookiesAccepted', 'true');
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'cookie_accept', { 'event_category': 'engagement' });
+        }
+    }
+    if (localStorage.getItem('cookiesAccepted') === 'true') {
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
+
+    // ===== COUNTDOWN TIMER =====
+    function startCountdown() {
+        let endDate = localStorage.getItem('offerEndDate');
+        if (!endDate) {
+            endDate = new Date().getTime() + (30 * 24 * 60 * 60 * 1000);
+            localStorage.setItem('offerEndDate', endDate);
+        }
+        endDate = parseInt(endDate);
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = endDate - now;
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById('countdown').innerHTML = 'OFFER ENDED';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML =
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }, 1000);
+    }
+    startCountdown();
+
+    // ===== PAPER FILTER =====
+    const filterBtns = document.querySelectorAll('.paper-type-btn');
+    const paperCards = document.querySelectorAll('.paper-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Update active state
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            const filter = this.getAttribute('data-filter');
+
+            // Filter cards
+            paperCards.forEach(card => {
+                if (filter === 'all' || card.getAttribute('data-type') === filter) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Track in GA
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'paper_filter', {
+                    'event_category': 'engagement',
+                    'event_label': filter
+                });
+            }
+        });
+    });
+
+    // ===== COPY CITATION =====
+    function copyCitation() {
+        const citationText = document.getElementById('citationText').innerText;
+        navigator.clipboard.writeText(citationText).then(() => {
+            const btn = event.target.closest('.copy-btn');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+            }, 2000);
+
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'citation_copy', {
+                    'event_category': 'engagement',
+                    'event_label': 'Technical Paper Citation'
+                });
+            }
+        });
+    }
+
+    // ===== TRACK PAPER DOWNLOADS (Lead Scoring) =====
+    document.querySelectorAll('.paper-download-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'paper_download', {
+                    'event_category': 'lead',
+                    'event_label': this.closest('.paper-card').querySelector('h3').innerText,
+                    'value': 3
+                });
+            }
+        });
+    });
+    </script>
+</body>
+</html>
