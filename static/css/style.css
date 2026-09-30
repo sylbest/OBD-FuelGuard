@@ -1,0 +1,1057 @@
+/* ============================================================
+   OBD-FuelGuard — Global Stylesheet
+   Author: SUS Company
+   Structure:
+     1.  CSS Variables (design tokens)
+     2.  Base / Reset
+     3.  Utilities
+     4.  Promo Banner
+     5.  Navigation
+     6.  Buttons
+     7.  Page Header
+     8.  Sections (generic)
+     9.  About content
+    10.  Values grid
+    11.  Solution grid
+    12.  How It Works (flow)
+    13.  Government callout
+    14.  CTA section
+    15.  Floating WhatsApp
+    16.  Cookie banner
+    17.  Footer
+    18.  Responsive breakpoints
+    19.  Accessibility
+   ============================================================ */
+
+
+/* ============================================================
+   1. CSS VARIABLES — Design Tokens
+   ============================================================ */
+:root {
+    /* Colors */
+    --color-black:        #111;
+    --color-black-soft:   #1a1a1a;
+    --color-white:        #fff;
+    --color-text:         #333;
+    --color-text-muted:   #666;
+    --color-text-light:   #888;
+    --color-text-faint:   #aaa;
+    --color-border:       #ddd;
+    --color-border-dark:  #333;
+    --color-bg:           #f5f5f5;
+    --color-bg-alt:       #f0f0f0;
+
+    /* Brand */
+    --accent-red:         #E30613;
+    --accent-red-dark:    #B00510;
+    --accent-green:       #25D366;
+
+    /* Typography */
+    --font-family:        'Roboto', system-ui, -apple-system, sans-serif;
+    --font-weight-light:  300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold:   700;
+    --font-weight-black:  900;
+
+    /* Spacing */
+    --space-xs:  5px;
+    --space-sm:  10px;
+    --space-md:  20px;
+    --space-lg:  30px;
+    --space-xl:  40px;
+    --space-2xl: 60px;
+    --space-3xl: 80px;
+
+    /* Layout */
+    --container-max: 1200px;
+    --nav-height:    70px;
+
+    /* Effects */
+    --shadow-sm:  0 2px 10px rgba(0, 0, 0, 0.08);
+    --shadow-md:  0 4px 15px rgba(0, 0, 0, 0.08);
+    --shadow-lg:  0 8px 30px rgba(0, 0, 0, 0.15);
+    --shadow-nav: 0 2px 10px rgba(0, 0, 0, 0.10);
+    --shadow-fab: 0 4px 15px rgba(0, 0, 0, 0.30);
+
+    /* Motion */
+    --transition-fast: 0.2s ease;
+    --transition:      0.3s ease;
+
+    /* Z-index scale */
+    --z-fab:    999;
+    --z-nav:    1000;
+    --z-promo:  1001;
+    --z-cookie: 1002;
+}
+
+
+/* ============================================================
+   2. BASE / RESET
+   ============================================================ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: var(--font-family);
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+a {
+    color: inherit;
+}
+
+button {
+    font: inherit;
+}
+
+
+/* ============================================================
+   3. UTILITIES
+   ============================================================ */
+.text-center {
+    text-align: center;
+}
+
+.text-center .section-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* ============================================================
+   4. PROMO BANNER
+   ============================================================ */
+.promo-banner {
+    background: linear-gradient(90deg, var(--accent-red) 0%, var(--accent-red-dark) 100%);
+    color: var(--color-white);
+    text-align: center;
+    padding: var(--space-sm) var(--space-md);
+    font-size: 14px;
+    font-weight: var(--font-weight-medium);
+    position: relative;
+    z-index: var(--z-promo);
+}
+
+.promo-banner strong {
+    font-weight: var(--font-weight-black);
+}
+
+.promo-banner .countdown {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-left: 10px;
+    font-weight: var(--font-weight-bold);
+}
+
+
+/* ============================================================
+   5. NAVIGATION
+   ============================================================ */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 0 var(--space-xl);
+    height: var(--nav-height);
+    position: sticky;
+    top: 0;
+    z-index: var(--z-nav);
+    box-shadow: var(--shadow-nav);
+}
+
+.nav-left,
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.logo {
+    font-weight: var(--font-weight-black);
+    font-size: 24px;
+    letter-spacing: -1px;
+    color: #000;
+}
+
+.logo span {
+    color: var(--accent-red);
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: 14px;
+    font-weight: var(--font-weight-medium);
+    transition: color var(--transition);
+    position: relative;
+}
+
+nav a:hover {
+    color: var(--accent-red);
+}
+
+/* ==== RED ACTIVE LINK ==== */
+nav a.active {
+    color: var(--accent-red) !important;
+    font-weight: var(--font-weight-bold) !important;
+}
+
+nav a.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -8px;
+    height: 2px;
+    background: var(--accent-red);
+    border-radius: 2px;
+}
+
+.nav-icons i {
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 15px;
+    transition: color var(--transition);
+}
+
+.nav-icons i:hover {
+    color: var(--accent-red);
+}
+
+
+/* ============================================================
+   6. BUTTONS
+   ============================================================ */
+.btn {
+    background-color: var(--accent-red);
+    color: var(--color-white);
+    padding: 12px 28px;
+    text-decoration: none;
+    font-weight: var(--font-weight-bold);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+    transition: all var(--transition);
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.btn:hover {
+    background-color: #000;
+    color: var(--color-white);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--color-white);
+    border: 2px solid var(--color-white);
+}
+
+.btn-outline:hover {
+    background-color: var(--color-white);
+    color: #000;
+}
+
+.btn-outline-dark {
+    background-color: transparent;
+    color: var(--accent-red);
+    border: 2px solid var(--accent-red);
+}
+
+.btn-outline-dark:hover {
+    background-color: var(--accent-red);
+    color: var(--color-white);
+}
+
+
+/* ============================================================
+   7. PAGE HEADER (hero banner on inner pages)
+   ============================================================ */
+.page-header {
+    position: relative;
+    height: 50vh;
+    min-height: 320px;
+    background: url('https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=2070&auto=format&fit=crop') center / cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-white);
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.page-header-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 0 var(--space-md);
+}
+
+.page-header-content h1 {
+    font-size: 52px;
+    font-weight: var(--font-weight-black);
+    text-transform: uppercase;
+    margin-bottom: var(--space-md);
+    line-height: 1.1;
+}
+
+.page-header-content h1 span {
+    color: var(--accent-red);
+}
+
+.page-header-content p {
+    font-size: 18px;
+    color: #ddd;
+    line-height: 1.8;
+}
+
+.breadcrumb {
+    margin-bottom: var(--space-md);
+    font-size: 14px;
+    color: var(--color-text-faint);
+}
+
+.breadcrumb a {
+    color: var(--accent-red);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+
+/* ============================================================
+   8. SECTIONS (generic)
+   ============================================================ */
+.section {
+    padding: var(--space-3xl);
+    max-width: var(--container-max);
+    margin: 0 auto;
+}
+
+.section-dark {
+    background-color: #000;
+    color: var(--color-white);
+}
+
+.section-light {
+    background-color: var(--color-white);
+    color: var(--color-text);
+}
+
+.section-gray {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+
+.section-title {
+    font-size: 36px;
+    font-weight: var(--font-weight-black);
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    line-height: 1.1;
+}
+
+.section-title span {
+    color: var(--accent-red);
+}
+
+.section-subtitle {
+    font-size: 18px;
+    color: var(--color-text-light);
+    margin-bottom: var(--space-xl);
+    max-width: 700px;
+    line-height: 1.6;
+}
+
+.section-subtitle-light {
+    color: var(--color-text-faint);
+}
+
+
+/* ============================================================
+   9. ABOUT CONTENT
+   ============================================================ */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    align-items: center;
+}
+
+.about-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.about-text h2 {
+    font-size: 28px;
+    margin-bottom: var(--space-md);
+    text-transform: uppercase;
+}
+
+.about-text h2 span {
+    color: var(--accent-red);
+}
+
+.about-text p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-md);
+}
+
+.about-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 36px;
+    font-weight: var(--font-weight-black);
+    color: var(--accent-red);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    margin-top: var(--space-xs);
+    letter-spacing: 0.5px;
+}
+
+
+/* ============================================================
+   10. VALUES GRID
+   ============================================================ */
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+}
+
+.value-card {
+    background: var(--color-black-soft);
+    padding: var(--space-lg);
+    border-radius: 8px;
+    text-align: center;
+    transition: transform var(--transition), border-color var(--transition);
+    border-bottom: 3px solid transparent;
+}
+
+.value-card:hover {
+    transform: translateY(-5px);
+    border-bottom-color: var(--accent-red);
+}
+
+.value-card i {
+    font-size: 36px;
+    color: var(--accent-red);
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.value-card h4 {
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-bottom: var(--space-sm);
+    color: var(--color-white);
+}
+
+.value-card p {
+    font-size: 14px;
+    color: var(--color-text-faint);
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   11. SOLUTION GRID
+   ============================================================ */
+.solution-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+}
+
+.solution-card {
+    background: var(--color-white);
+    padding: var(--space-xl) var(--space-lg);
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition);
+    border-top: 4px solid transparent;
+}
+
+.solution-card:hover {
+    border-top-color: var(--accent-red);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-5px);
+}
+
+.solution-card i {
+    font-size: 40px;
+    color: var(--accent-red);
+    margin-bottom: var(--space-md);
+    display: inline-block;
+}
+
+.solution-card h4 {
+    font-size: 20px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    color: var(--color-black);
+}
+
+.solution-card p {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   12. HOW IT WORKS — FLOW
+   ============================================================ */
+.flow-section {
+    padding: var(--space-3xl);
+    background: #000;
+    color: var(--color-white);
+}
+
+.flow-container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+}
+
+.flow-steps {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--space-sm);
+    margin-top: var(--space-xl);
+    position: relative;
+}
+
+.flow-step {
+    text-align: center;
+    position: relative;
+}
+
+.flow-step .step-number {
+    background: var(--accent-red);
+    color: var(--color-white);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-black);
+    font-size: 16px;
+    margin: 0 auto 15px;
+}
+
+.flow-step h5 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-text-faint);
+    margin-bottom: var(--space-xs);
+}
+
+.flow-step p {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+}
+
+.flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #444;
+}
+
+
+/* ============================================================
+   13. GOVERNMENT CALLOUT
+   ============================================================ */
+.gov-callout {
+    background: var(--color-bg-alt);
+    padding: var(--space-2xl);
+    border-radius: 12px;
+    border-left: 5px solid var(--accent-red);
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+}
+
+.gov-callout h3 {
+    font-size: 28px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.gov-callout h3 span {
+    color: var(--accent-red);
+}
+
+.gov-callout p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+}
+
+.gov-callout ul {
+    margin-top: var(--space-md);
+    list-style: none;
+    padding: 0;
+}
+
+.gov-callout ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.gov-callout ul li:last-child {
+    border-bottom: none;
+}
+
+.gov-callout ul li i {
+    color: var(--accent-red);
+}
+
+.gov-callout-badge {
+    background: var(--accent-red);
+    color: var(--color-white);
+    padding: var(--space-lg);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.gov-callout-badge i {
+    font-size: 48px;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.gov-callout-badge h4 {
+    text-transform: uppercase;
+}
+
+.gov-callout-badge p {
+    font-size: 14px;
+    opacity: 0.8;
+    color: var(--color-white);
+}
+
+
+/* ============================================================
+   14. CTA SECTION
+   ============================================================ */
+.cta-section {
+    background: linear-gradient(135deg, #111 0%, #333 100%);
+    color: var(--color-white);
+    padding: var(--space-3xl) var(--space-xl);
+    text-align: center;
+}
+
+.cta-section h2 {
+    font-size: 36px;
+    font-weight: var(--font-weight-black);
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.cta-section h2 span {
+    color: var(--accent-red);
+}
+
+.cta-section p {
+    font-size: 18px;
+    color: #ccc;
+    margin-bottom: var(--space-lg);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   15. FLOATING WHATSAPP
+   ============================================================ */
+.whatsapp-float {
+    position: fixed;
+    bottom: var(--space-lg);
+    right: var(--space-lg);
+    background: var(--accent-green);
+    color: var(--color-white);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    box-shadow: var(--shadow-fab);
+    z-index: var(--z-fab);
+    text-decoration: none;
+    transition: transform var(--transition);
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+}
+
+
+/* ============================================================
+   16. COOKIE BANNER
+   ============================================================ */
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-black);
+    color: var(--color-white);
+    padding: 15px var(--space-xl);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: var(--z-cookie);
+    font-size: 13px;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.cookie-banner a {
+    color: var(--accent-red);
+}
+
+.cookie-banner button {
+    background: var(--accent-red);
+    color: var(--color-white);
+    border: none;
+    padding: 8px var(--space-md);
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: var(--font-weight-bold);
+    transition: background var(--transition);
+}
+
+.cookie-banner button:hover {
+    background: var(--accent-red-dark);
+}
+
+
+/* ============================================================
+   17. FOOTER
+   ============================================================ */
+footer {
+    background: var(--color-black);
+    color: var(--color-text-light);
+    padding: var(--space-2xl) var(--space-3xl);
+    font-size: 14px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xl);
+    margin-bottom: var(--space-xl);
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-col h4 {
+    color: var(--color-white);
+    margin-bottom: var(--space-md);
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: var(--space-sm);
+    transition: color var(--transition);
+}
+
+.footer-col ul li a {
+    color: var(--color-text-light);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.footer-col ul li a:hover {
+    color: var(--color-white);
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.social-icons a {
+    color: var(--color-text-light);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.social-icons i {
+    font-size: 20px;
+    transition: color var(--transition);
+}
+
+.social-icons i:hover {
+    color: var(--color-white);
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--color-border-dark);
+    padding-top: var(--space-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.footer-bottom-left {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.footer-bottom-left a {
+    color: var(--color-text-light);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.footer-bottom-left a:hover {
+    color: var(--color-white);
+}
+
+
+/* ============================================================
+   18. RESPONSIVE BREAKPOINTS
+   ============================================================ */
+
+/* ---------- Tablet: ≤ 1024px ---------- */
+@media (max-width: 1024px) {
+    .about-grid,
+    .values-grid,
+    .solution-grid,
+    .gov-callout {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .section,
+    .flow-section {
+        padding: var(--space-2xl) var(--space-xl);
+    }
+
+    footer {
+        padding: var(--space-xl);
+    }
+}
+
+/* ---------- Mobile: ≤ 768px ---------- */
+@media (max-width: 768px) {
+    nav {
+        padding: 0 var(--space-md);
+    }
+
+    .nav-left a {
+        display: none;
+    }
+
+    .page-header-content h1 {
+        font-size: 32px;
+    }
+
+    .about-grid,
+    .values-grid,
+    .solution-grid,
+    .gov-callout {
+        grid-template-columns: 1fr;
+    }
+
+    .section,
+    .flow-section {
+        padding: var(--space-xl) var(--space-md);
+    }
+
+    .about-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .flow-steps {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+    }
+
+    .flow-arrow {
+        transform: rotate(90deg);
+    }
+
+    footer {
+        padding: var(--space-xl) var(--space-md);
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: var(--space-md);
+        text-align: center;
+    }
+
+    .cookie-banner {
+        padding: 15px var(--space-md);
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .promo-banner {
+        font-size: 12px;
+        padding: 8px 15px;
+    }
+
+    .promo-banner .countdown {
+        display: block;
+        margin-left: 0;
+        margin-top: var(--space-xs);
+    }
+
+    .whatsapp-float {
+        bottom: var(--space-md);
+        right: var(--space-md);
+        width: 55px;
+        height: 55px;
+        font-size: 26px;
+    }
+
+    .cta-section {
+        padding: var(--space-2xl) var(--space-md);
+    }
+
+    .cta-section h2,
+    .section-title {
+        font-size: 28px;
+    }
+
+    .about-image {
+        height: 260px;
+    }
+}
+
+/* ---------- Small mobile: ≤ 480px ---------- */
+@media (max-width: 480px) {
+    .page-header-content h1 {
+        font-size: 26px;
+    }
+
+    .stat-number {
+        font-size: 28px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ============================================================
+   19. ACCESSIBILITY — prefers-reduced-motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+
+
+
+
+
+
+
+
